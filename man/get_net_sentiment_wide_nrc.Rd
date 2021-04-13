@@ -5,7 +5,7 @@
 \title{Title}
 \usage{
 get_net_sentiment_wide_nrc(
-  text_data,
+  x,
   class_col_name,
   org_col_name,
   filter_class,

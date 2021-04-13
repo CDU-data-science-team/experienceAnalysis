@@ -11,12 +11,12 @@
 #'
 #' @examples
 
-get_net_sentiment_wide_nrc <- function(text_data, class_col_name, org_col_name,
+get_net_sentiment_wide_nrc <- function(x, class_col_name, org_col_name,
                                  filter_class, filter_organization) {
 
   nrc_sentiments <- get_sentiments_nrc()
 
-  text_data_filtered <- text_data %>%
+  text_data_filtered <- x %>%
     #dplyr::filter(super != "Couldn't be improved") %>%
     dplyr::mutate(linenumber = dplyr::row_number()) %>%
     dplyr::filter(
