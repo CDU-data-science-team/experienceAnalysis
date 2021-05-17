@@ -28,27 +28,20 @@ You can install the released version of experienceAnalysis from [CRAN](https://C
 install.packages("experienceAnalysis")
 ```
 
-## Example
+## Naming guidelines for functions
 
-This is a basic example which shows you how to solve a common problem:
+### Data manipulations
 
-```{r example}
-library(experienceAnalysis)
-## basic example code
-```
+- `get_*()`: Get data, e.g., from a database or somewhere else
+- `tidy_*()`: Tidy data (generally from a database), e.g., renaming variables, removing duplicates, creating factors, 'wide' to 'long' format
+- `collect_*()`: Collect data of specific cases, mainly wrapper functions for specific filter commands
+- `prep_*()`: Prepare data for further use, e.g., to create tables, sorting vectors, ...
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### Data analyses
 
-```{r cars}
-summary(cars)
-```
+- `calc_*()`: Calculations or analyses, e.g., counting data, regression analyses, ...
+- `summary_*()`: Summarise results of calculations, there might be some overlap with `prep_*()`
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+## Visualisations
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+- `plot_*()`: Creates a plot
