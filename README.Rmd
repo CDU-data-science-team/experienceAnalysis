@@ -18,7 +18,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of experienceAnalysis is to ...
+The goal of `{experienceAnalysis}` is to host a collection of helper functions 
+that are mainly concerned with the calculation and visualization of sentiment 
+analysis indicators and word counts/frequencies (e.g. TF-IDF for unigrams and bigrams)
+for use with other packages, such as [`{pxtextminingdashboard}`](https://github.com/CDU-data-science-team/pxtextminingdashboard). The package can also be used in its own right- most functions are general
+enough to suit different needs.
 
 ## Installation
 
