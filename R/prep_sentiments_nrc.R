@@ -5,7 +5,7 @@
 #'
 #' @examples
 
-get_sentiments_nrc <- function() {
+prep_sentiments_nrc <- function() {
 
   nrc_sentiments <- tidytext::get_sentiments("nrc") %>%
     dplyr::select(sentiment) %>%

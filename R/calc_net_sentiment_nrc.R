@@ -11,10 +11,10 @@
 #'
 #' @examples
 
-get_net_sentiment_wide_nrc <- function(x, class_col_name, org_col_name,
+calc_net_sentiment_nrc <- function(x, class_col_name, org_col_name,
                                  filter_class, filter_organization) {
 
-  nrc_sentiments <- get_sentiments_nrc()
+  nrc_sentiments <- experienceAnalysis::prep_sentiments_nrc()
 
   text_data_filtered <- x %>%
     #dplyr::filter(super != "Couldn't be improved") %>%

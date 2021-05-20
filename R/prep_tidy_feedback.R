@@ -8,7 +8,7 @@
 #'
 #' @examples
 
-get_tidy_feedback <- function(x, target_col_name) {
+prep_tidy_feedback <- function(x, target_col_name) {
 
   tidy_feedback <- x %>%
     dplyr::group_by(

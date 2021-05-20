@@ -9,9 +9,9 @@
 #'
 #' @examples
 
-get_net_sentiment_per_tag <- function(x, target_col_name, filter_organization) {
+calc_net_sentiment_per_tag <- function(x, target_col_name, filter_organization) {
 
-  tidy_feedback <- experienceAnalysis::get_tidy_feedback(x, target_col_name)
+  tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name)
 
   # Find net sentiment in each tag
   net_sentiment_afinn <- tidy_feedback %>%

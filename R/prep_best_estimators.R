@@ -7,7 +7,7 @@
 #'
 #' @examples
 
-get_best_estimators <- function(x) {
+prep_best_estimators <- function(x) {
 
   best_estimators <- x %>%
     dplyr::mutate(learner = sub("\\(.*", "", param_clf__estimator)) %>%

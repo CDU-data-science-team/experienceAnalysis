@@ -12,7 +12,7 @@
 #'
 #' @examples
 
-get_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
+calc_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
                                      venv_name, make_table = TRUE) {
 
   Sys.setenv(RETICULATE_PYTHON = sys_setenv)

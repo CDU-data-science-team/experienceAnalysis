@@ -11,7 +11,7 @@
 #'
 #' @examples
 
-get_tfidf_ngrams <- function(x, target_col_name, filter_class,
+calc_tfidf_ngrams <- function(x, target_col_name, filter_class,
                          filter_organization, ngrams_type) {
 
   ngrams_n <- ifelse(ngrams_type == "Unigrams", 1, 2)
