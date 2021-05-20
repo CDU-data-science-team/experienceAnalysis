@@ -7,7 +7,7 @@
 #'
 #' @examples
 
-get_all_pipeline_tuning_results <- function(x) {
+prep_all_pipeline_tuning_results <- function(x) {
 
   pipeline_tuning_results <- x %>%
     dplyr::select(

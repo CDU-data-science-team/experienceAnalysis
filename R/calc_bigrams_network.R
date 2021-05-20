@@ -11,7 +11,7 @@
 #'
 #' @examples
 
-get_bigrams_network <- function(x, target_col_name, filter_class,
+calc_bigrams_network <- function(x, target_col_name, filter_class,
                          filter_organization, bigrams_prop) {
 
   bigrams_table <- x %>%

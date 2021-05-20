@@ -5,11 +5,11 @@
 #'
 #' @examples
 
-get_net_sentiment_long_nrc <- function(net_sentiment_wide_nrc,
+tidy_net_sentiment_nrc <- function(net_sentiment_wide_nrc,
                                        sorting_sentiments = "anger",
                                        num_of_facets = 60) {
 
-  nrc_sentiments <- get_sentiments_nrc()
+  nrc_sentiments <- experienceAnalysis::prep_sentiments_nrc()
 
   net_sentiment_long_nrc <- net_sentiment_wide_nrc %>%
     dplyr::arrange(

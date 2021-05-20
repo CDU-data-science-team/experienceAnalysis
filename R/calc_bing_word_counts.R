@@ -10,10 +10,10 @@
 #'
 #' @examples
 
-get_bing_word_counts <- function(x, target_col_name,
+calc_bing_word_counts <- function(x, target_col_name,
                                  filter_organization, filter_class) {
 
-  tidy_feedback <- experienceAnalysis::get_tidy_feedback(x, target_col_name)
+  tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name)
 
   # Most common positive and negative words
   bing_word_counts <- tidy_feedback %>%
