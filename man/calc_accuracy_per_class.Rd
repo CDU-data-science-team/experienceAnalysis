@@ -2,21 +2,52 @@
 % Please edit documentation in R/calc_accuracy_per_class.R
 \name{calc_accuracy_per_class}
 \alias{calc_accuracy_per_class}
-\title{Title}
+\title{Calculate classifier accuracy for each class and group}
 \usage{
 calc_accuracy_per_class(
   x,
   target_col_name,
   target_pred_col_name,
-  grouping_variable = NULL
+  grouping_variables = NULL,
+  column_names = c(NULL, "px")
 )
 }
 \arguments{
-\item{grouping_variable}{}
+\item{x}{A data frame with two or more columns, of which two should be
+the following: the column with the actual classes; and the column with
+the predicted classes. If there are grouping variables, the rest of the
+columns should have the groups.}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{target_pred_col_name}{A string with the column name of the predictions
+for the target variable.}
+
+\item{grouping_variables}{A string or vector of strings with the column
+name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
+
+\item{column_names}{A vector of strings, \code{NULL} or "px", used to specify the
+names of the returned data frame/tibble. See Details.}
 }
 \value{
-
+A data frame/tibble with as many rows as the number of unique labels
+for each group (if any). See Details.
 }
 \description{
-Title
+Calculates the accuracy of a predictive model for each class and given group
+(if any).
+}
+\details{
+This function was originally designed for use with package
+\href{https://github.com/CDU-data-science-team/pxtextminingdashboard}{\code{{pxtextminingdashboard}}}.
+It can, however, be used outside the context of \code{{pxtextmining}}, by
+controlling the \code{column_names} argument:
+- When \code{column_names == "px"}, the returned data frame has at least three
+columns, namely, "organization" (the group), "class" (the label) and
+"accuracy". When there are more than one groups, the first one is
+considered to be the "main" one and is named "organization" by default.
+- When \code{column_names} is \code{NULL}, then the returned data frame names are
+\code{c(grouping_variables, target_col_name, "accuracy")}.
+- When \code{column_names} is a vector of strings, the returned data frame
+names are as in the vector.
 }
