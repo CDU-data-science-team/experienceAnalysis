@@ -11,14 +11,32 @@
 #'
 #' @examples
 
-calc_tfidf_ngrams <- function(x, target_col_name, filter_class,
-                         filter_organization, ngrams_type) {
+calc_tfidf_ngrams <- function(x, target_col_name, text_col_name,
+                              grouping_variables = NULL,
+                              filter_class = NULL, filter_main_group = NULL,
+                              ngrams_type = c("Unigrams", "Bigrams")) {
+
+  aux <- experienceAnalysis::prep_colnames_and_filters(
+    x, grouping_variables,
+    target_col_name, filter_class,
+    filter_main_group,
+    column_names = NULL)
+
+  filter_class <- aux$filter_class
+  filter_main_group <- aux$filter_main_group
+  main_group_col_name <- aux$main_group_col_name
 
   ngrams_n <- ifelse(ngrams_type == "Unigrams", 1, 2)
 
   tfidf_ngrams <- x %>%
-    #dplyr::filter(organization %in% {{filter_organization}}) %>%
-    tidytext::unnest_tokens(ngram, feedback, token = "ngrams", n = ngrams_n) %>%
+    dplyr::filter(
+      dplyr::across(
+        dplyr::all_of(main_group_col_name),
+        ~ . %in% filter_main_group
+      )
+    ) %>%
+    tidytext::unnest_tokens(ngram, !! text_col_name,
+                            token = "ngrams", n = ngrams_n) %>%
     tidyr::separate(ngram, paste0("word", 1:ngrams_n), sep = " ") %>%
     dplyr::filter( # Do this because some stop words make it through the TF-IDF filtering that happens below.
       dplyr::across(
@@ -35,7 +53,7 @@ calc_tfidf_ngrams <- function(x, target_col_name, filter_class,
     dplyr::filter(
       dplyr::across(
         dplyr::all_of(target_col_name),
-        ~ . %in% {{filter_class}}
+        ~ . %in% filter_class
       )
     )
 

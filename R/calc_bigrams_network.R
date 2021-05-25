@@ -11,20 +11,37 @@
 #'
 #' @examples
 
-calc_bigrams_network <- function(x, target_col_name, filter_class,
-                         filter_organization, bigrams_prop) {
+calc_bigrams_network <- function(x, target_col_name, text_col_name,
+                                 grouping_variables = NULL,
+                                 filter_class = NULL,
+                                 filter_main_group = NULL, bigrams_prop) {
+
+  aux <- experienceAnalysis::prep_colnames_and_filters(
+    x, grouping_variables,
+    target_col_name, filter_class,
+    filter_main_group,
+    column_names = NULL)
+
+  filter_class <- aux$filter_class
+  filter_main_group <- aux$filter_main_group
+  main_group_col_name <- aux$main_group_col_name
 
   bigrams_table <- x %>%
-    dplyr::filter(organization %in% {{filter_organization}}) %>%
+    dplyr::filter(
+      dplyr::across(
+        dplyr::all_of(main_group_col_name),
+        ~ . %in% filter_main_group)
+      ) %>%
     dplyr::filter(
       dplyr::across(
         dplyr::all_of(target_col_name),
-        ~ . %in% {{filter_class}}
+        ~ . %in% filter_class
       )
     ) %>%
-    tidytext::unnest_tokens(bigram, feedback, token = "ngrams", n = 2) %>%
+    tidytext::unnest_tokens(bigram, !! text_col_name,
+                            token = "ngrams", n = 2) %>%
     tidyr::separate(bigram, c("word1", "word2"), sep = " ") %>%
-    dplyr::filter( # Do this because some stop words make it through the TF-IDF filtering that happens below.
+    dplyr::filter(
       dplyr::across(
         dplyr::starts_with("word"),
         ~ !. %in% tidytext::stop_words$word

@@ -10,19 +10,35 @@
 #'
 #' @examples
 
-calc_bing_word_counts <- function(x, target_col_name,
-                                 filter_organization, filter_class) {
+calc_bing_word_counts <- function(x, target_col_name, text_col_name,
+                                  grouping_variables = NULL,
+                                  filter_main_group = NULL,
+                                  filter_class = NULL) {
 
-  tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name)
+  aux <- experienceAnalysis::prep_colnames_and_filters(
+    x, grouping_variables,
+    target_col_name, filter_class,
+    filter_main_group,
+    column_names = NULL)
+
+  filter_class <- aux$filter_class
+  filter_main_group <- aux$filter_main_group
+  main_group_col_name <- aux$main_group_col_name
+
+  tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name,
+                                                          text_col_name)
 
   # Most common positive and negative words
   bing_word_counts <- tidy_feedback %>%
     dplyr::filter(
       dplyr::across(
         dplyr::all_of(target_col_name),
-        ~ . %in% {{filter_class}}
+        ~ . %in% filter_class
       ),
-      organization %in% {{filter_organization}}
+      dplyr::across(
+        dplyr::all_of(main_group_col_name),
+        ~ . %in% filter_main_group
+      )
     ) %>%
     dplyr::inner_join(tidytext::get_sentiments("bing"), by = "word") %>%
     dplyr::count(word, sentiment, sort = TRUE)

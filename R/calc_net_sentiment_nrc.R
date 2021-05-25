@@ -11,28 +11,39 @@
 #'
 #' @examples
 
-calc_net_sentiment_nrc <- function(x, class_col_name, org_col_name,
-                                 filter_class, filter_organization) {
+calc_net_sentiment_nrc <- function(x, target_col_name, text_col_name,
+                                   grouping_variables = NULL,
+                                   filter_class, filter_main_group = NULL) {
 
   nrc_sentiments <- experienceAnalysis::prep_sentiments_nrc()
+
+  aux <- experienceAnalysis::prep_colnames_and_filters(
+    x, grouping_variables,
+    target_col_name = NULL, filter_class,
+    filter_main_group,
+    column_names = NULL)
+
+  filter_class <- aux$filter_class
+  filter_main_group <- aux$filter_main_group
+  main_group_col_name <- aux$main_group_col_name
 
   text_data_filtered <- x %>%
     #dplyr::filter(super != "Couldn't be improved") %>%
     dplyr::mutate(linenumber = dplyr::row_number()) %>%
     dplyr::filter(
       dplyr::across(
-        dplyr::all_of(class_col_name),
-        # .data[[class_col_name]],
-        ~ . %in% {{filter_class}}
+        dplyr::all_of(target_col_name),
+        # .data[[target_col_name]],
+        ~ . %in% filter_class
       ),
       dplyr::across(
-        dplyr::all_of(org_col_name),
-        ~ . %in% {{filter_organization}}
+        dplyr::all_of(main_group_col_name),
+        ~ . %in% filter_main_group
       )
     )
 
   net_sentiment_nrc <- text_data_filtered %>%
-    tidytext::unnest_tokens(word, feedback) %>%
+    tidytext::unnest_tokens(word, !! text_col_name) %>%
     dplyr::left_join(tidytext::get_sentiments("nrc"), by = "word") %>% # We want a left join so as not to lose comments with no sentiment
     dplyr::count(linenumber, sentiment, name = "sentiment_count") %>%
     dplyr::mutate(

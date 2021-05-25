@@ -40,16 +40,12 @@ calc_accuracy_per_class <- function(x, target_col_name, target_pred_col_name,
                                     column_names = c(NULL, "px"))
   {
 
-  if (all(is.null(column_names))) {
-
-    column_names <- c(grouping_variables, target_col_name, "accuracy")
-  } else if (all(column_names %in% "px")) {
-
-    column_names <- c("organization", grouping_variables[-1],
-                      "class", "accuracy")
-  }
-
-  column_names <- column_names[!is.null(column_names)]
+  column_names <- experienceAnalysis::prep_colnames_and_filters(
+    x = NULL, grouping_variables,
+    target_col_name, filter_class = NULL,
+    # main_group_col_name = grouping_variables[1],
+    filter_main_group = NULL,
+    column_names)$column_names
 
   accuracy_per_class <- x %>%
     dplyr::mutate(actual_vs_predicted =

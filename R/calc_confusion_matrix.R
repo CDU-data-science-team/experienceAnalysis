@@ -11,35 +11,31 @@
 #' @examples
 
 calc_confusion_matrix <- function(x, target_col_name, target_pred_col_name,
-                                  grouping_variables = NULL) {
+                                  grouping_variables = NULL, ...) {
 
+  aux <- x %>%
+    dplyr::select(dplyr::all_of(c(grouping_variables, target_col_name,
+                                  target_pred_col_name))) %>%
+    dplyr::mutate(
+      dplyr::across(
+        -dplyr::all_of(grouping_variables),
+        ~ as.factor(.)
+      )
+    )
 
   if (!is.null(grouping_variables)) {
 
-    cm <- x %>%
-      dplyr::select(dplyr::all_of(c(grouping_variables, target_col_name,
-                           target_pred_col_name))) %>%
-      dplyr::mutate(
-        dplyr::across(
-          -dplyr::all_of(grouping_variables),
-          ~ as.factor(.)
-        )
-      ) %>%
+    cm <- aux %>%
       split(f = .[[grouping_variables]]) %>%
       purrr::map(
-        ~ yardstick::conf_mat(., {{target_col_name}}, {{target_pred_col_name}})
+        ~ yardstick::conf_mat(., {{target_col_name}}, {{target_pred_col_name}},
+                              ...)
       )
   } else {
 
-    cm <- x %>%
-      dplyr::select(dplyr::all_of(c(target_col_name, target_pred_col_name))) %>%
-      dplyr::mutate(
-        dplyr::across(
-          dplyr::everything(),
-          ~ as.factor(.)
-        )
-      ) %>%
-      yardstick::conf_mat(., {{target_col_name}}, {{target_pred_col_name}}) %>%
+    cm <- aux %>%
+      yardstick::conf_mat(., {{target_col_name}}, {{target_pred_col_name}},
+                          ...) %>%
       list() # Convert to list to ensure returned object class is consistent.
   }
 
