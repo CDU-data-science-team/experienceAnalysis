@@ -2,21 +2,38 @@
 % Please edit documentation in R/calc_confusion_matrix.R
 \name{calc_confusion_matrix}
 \alias{calc_confusion_matrix}
-\title{Title}
+\title{Calculate the confusion matrix for each group}
 \usage{
 calc_confusion_matrix(
   x,
   target_col_name,
   target_pred_col_name,
-  grouping_variable = NULL
+  grouping_variables = NULL,
+  ...
 )
 }
 \arguments{
-\item{grouping_variable}{}
+\item{x}{A data frame with two or more columns, of which two should be
+the following: the column with the actual classes; and the column with
+the predicted classes. If there are grouping variables, the rest of the
+columns should have the groups.}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{target_pred_col_name}{A string with the column name of the predictions
+for the target variable.}
+
+\item{grouping_variables}{A string or vector of strings with the column
+name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
+
+\item{...}{Further arguments passed from other methods.}
 }
 \value{
-
+A list with as many elements as the number of groups (no groups
+returns a list with one element). Each element contains an object with
+class \code{conf_mat()} (see \verb{conf_mat\{yardstick\}}).
 }
 \description{
-Title
+Calculates the confusion matrix of observed and predicted classes, overall
+or for each group (if any).
 }

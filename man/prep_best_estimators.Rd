@@ -2,7 +2,7 @@
 % Please edit documentation in R/prep_best_estimators.R
 \name{prep_best_estimators}
 \alias{prep_best_estimators}
-\title{Title}
+\title{Prepare table with the best (hyper)parameter tunings for each learner}
 \usage{
 prep_best_estimators(x)
 }
@@ -13,5 +13,5 @@ prep_best_estimators(x)
 
 }
 \description{
-Title
+Internal function
 }

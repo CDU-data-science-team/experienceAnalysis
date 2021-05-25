@@ -2,17 +2,31 @@
 % Please edit documentation in R/tidy_net_sentiment_nrc.R
 \name{tidy_net_sentiment_nrc}
 \alias{tidy_net_sentiment_nrc}
-\title{Title}
+\title{Order sentiment occurrence table by sentiment counts}
 \usage{
 tidy_net_sentiment_nrc(
   net_sentiment_wide_nrc,
   sorting_sentiments = "anger",
-  num_of_facets = 60
+  num_of_lines = 60
 )
+}
+\arguments{
+\item{net_sentiment_wide_nrc}{A data frame/tibble derived from
+calc_net_sentiment_per_tag{experienceAnalysis}.}
+
+\item{sorting_sentiments}{A string of vector of strings with the NRC
+sentiments by which to sort the returned table. (To see all NRC
+sentiments run \code{prep_sentiments_nrc()}). Order matters:
+\code{c("anger", "fear")} will sort by "anger" first. Conversely,
+\code{c("fear", "anger")} will sort by "fear" first.}
+
+\item{num_of_lines}{The number of records to return, overall or for
+each group (if any).}
 }
 \value{
 
 }
 \description{
-Title
+Order result of \verb{calc_net_sentiment_per_tag\{experienceAnalysis\}} by the
+count of one or more NRC sentiments, and convert to "tidy" format.
 }

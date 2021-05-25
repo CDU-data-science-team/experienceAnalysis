@@ -2,22 +2,51 @@
 % Please edit documentation in R/calc_tfidf_ngrams.R
 \name{calc_tfidf_ngrams}
 \alias{calc_tfidf_ngrams}
-\title{Title}
+\title{Calculate TF-IDFs for unigrams or bigrams}
 \usage{
 calc_tfidf_ngrams(
   x,
   target_col_name,
-  filter_class,
-  filter_organization,
-  ngrams_type
+  text_col_name,
+  grouping_variables = NULL,
+  filter_class = NULL,
+  filter_main_group = NULL,
+  ngrams_type = c("Unigrams", "Bigrams")
 )
 }
 \arguments{
-\item{ngrams_type}{}
+\item{x}{A data frame with three columns: the column with the classes; the
+column with the text; and the column(s) with the group(s).}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{text_col_name}{A string with the column name of the text variable.}
+
+\item{grouping_variables}{A string or vector of strings with the column
+name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
+
+\item{filter_class}{A string or vector of strings with the name(s) of the
+class(es) for which TF-IDFs are to be calculated. Defaults to
+\code{NULL} (all classes).}
+
+\item{filter_main_group}{A string with the name(s) of the organization(s)
+for which to calculate TF-IDFs. Defaults to \code{NULL} (all
+organizations).}
+
+\item{ngrams_type}{A string. Should be "Unigrams" for unigrams and "Bigrams"
+for bigrams.}
 }
 \value{
-
+A data frame with six columns: class; n-gram (word or bigram); count;
+term-frequency; inverse document frequency; and TF-IDF.
 }
 \description{
-Title
+For a given labeled text, return the unigrams or bigrams with the 15
+largest TF-IDFs for the given class(es) and organization(s).
+}
+\note{
+When supplying more than one organization and/or class, the returned
+data frame will NOT separate the results for the different organizations
+and/or classes, i.e. the function sees multiple organizations and/or
+classes as one.
 }

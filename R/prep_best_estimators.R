@@ -1,4 +1,6 @@
-#' Title
+#' Prepare table with the best (hyper)parameter tunings for each learner
+#'
+#' Internal function
 #'
 #' @param x
 #'

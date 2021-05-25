@@ -1,4 +1,6 @@
-#' Title
+#' Prepare table with all (hyper)parameter tunings
+#'
+#' Internal function
 #'
 #' @param x
 #'

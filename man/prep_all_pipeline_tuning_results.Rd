@@ -2,7 +2,7 @@
 % Please edit documentation in R/prep_all_pipeline_tuning_results.R
 \name{prep_all_pipeline_tuning_results}
 \alias{prep_all_pipeline_tuning_results}
-\title{Title}
+\title{Prepare table with all (hyper)parameter tunings}
 \usage{
 prep_all_pipeline_tuning_results(x)
 }
@@ -13,5 +13,5 @@ prep_all_pipeline_tuning_results(x)
 
 }
 \description{
-Title
+Internal function
 }

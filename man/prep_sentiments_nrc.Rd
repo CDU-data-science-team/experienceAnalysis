@@ -12,3 +12,6 @@ Character vector of all NRC sentiments
 \description{
 Pulls NRC Sentiments
 }
+\examples{
+prep_sentiments_nrc()
+}

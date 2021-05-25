@@ -1,4 +1,4 @@
-#' Title
+#' Calculate TextBlob sentiment indicators
 #'
 #' @param x
 #' @param sys_setenv

@@ -2,22 +2,40 @@
 % Please edit documentation in R/calc_net_sentiment_nrc.R
 \name{calc_net_sentiment_nrc}
 \alias{calc_net_sentiment_nrc}
-\title{Title}
+\title{Calculate "net sentiment" in a text}
 \usage{
 calc_net_sentiment_nrc(
   x,
-  class_col_name,
-  org_col_name,
+  target_col_name,
+  text_col_name,
+  grouping_variables = NULL,
   filter_class,
-  filter_organization
+  filter_main_group = NULL
 )
 }
 \arguments{
-\item{filter_organization}{}
+\item{x}{A data frame with three columns: the column with the classes; the
+column with the text; and the column(s) with the group(s).}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{text_col_name}{A string with the column name of the text variable.}
+
+\item{grouping_variables}{A string or vector of strings with the column
+name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
+
+\item{filter_class}{A string or vector of strings with the name(s) of the
+class(es) for which bigrams are to be created and counted. Defaults to
+\code{NULL} (all classes).}
+
+\item{filter_main_group}{A string with the name(s) of the organization(s)
+for which to create and count bigrams. Defaults to \code{NULL} (all
+organizations).}
 }
 \value{
 
 }
 \description{
-Title
+For a given text, translate all words into NRC sentiments and count sentiment
+occurrences.
 }

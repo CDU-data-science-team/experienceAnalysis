@@ -12,22 +12,22 @@
 #'     for the target variable.
 #' @param grouping_variables A string or vector of strings with the column
 #'     name(s) (if any) of the grouping variable(s). Defaults to `NULL`.
-#' @param column_names A vector of strings, `NULL` or "px", used to specify the
+#' @param column_names A vector of strings or `NULL`, used to specify the
 #'     names of the returned data frame/tibble. See Details.
 #'
 #' @details This function was originally designed for use with package
 #'     [`{pxtextminingdashboard}`](https://github.com/CDU-data-science-team/pxtextminingdashboard),
-#'     in which case `column_names` is set to "px". It can, however, be used
-#'     outside the context of `{pxtextminingdashboard}`, by controlling the
-#'     `column_names` argument:
-#'     - When `column_names == "px"`, the returned data frame has at least three
-#'     columns, namely, "organization" (the group), "class" (the label) and
-#'     "accuracy". When there are more than one groups, the first one is
-#'     considered to be the "main" one and is named "organization" by default.
-#'     - When `column_names` is `NULL`, then the returned data frame names are
-#'     `c(grouping_variables, target_col_name, "accuracy")`.
-#'     - When `column_names` is a vector of strings, the returned data frame
-#'     names are as in the vector.
+#'     in which case `column_names` is set to `c("organization", "class",
+#'     "accuracy")`. It can, however, be used outside the context of
+#'     `{pxtextminingdashboard}`, by controlling the `column_names` argument:
+#'     \itemize{
+#'       \item{When `column_names` is `NULL`, then the returned data frame names
+#'         are `c(grouping_variables, target_col_name, "accuracy")`.}
+#'       \item{When `column_names` is a vector of strings, the returned data
+#'         frame names are as in the vector.}
+#'     }
+#'     I NEED TO CLARIFY THIS: When there are more than one groups, the first one is
+#'         considered to be the "main" one and is named "organization" by default.
 #'
 #' @return A data frame/tibble with as many rows as the number of unique labels
 #'     for each group (if any). See Details.

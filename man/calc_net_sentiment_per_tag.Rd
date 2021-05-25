@@ -2,16 +2,38 @@
 % Please edit documentation in R/calc_net_sentiment_per_tag.R
 \name{calc_net_sentiment_per_tag}
 \alias{calc_net_sentiment_per_tag}
-\title{Title}
+\title{Calculate "net positive" and "net negative" sentiment in a text}
 \usage{
-calc_net_sentiment_per_tag(x, target_col_name, filter_organization)
+calc_net_sentiment_per_tag(
+  x,
+  target_col_name,
+  text_col_name,
+  grouping_variables = NULL,
+  filter_main_group = NULL
+)
 }
 \arguments{
-\item{filter_organization}{}
+\item{x}{A data frame with three columns: the column with the classes; the
+column with the text; and the column(s) with the group(s).}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{text_col_name}{A string with the column name of the text variable.}
+
+\item{grouping_variables}{A string or vector of strings with the column
+name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
+
+\item{filter_main_group}{A string with the name(s) of the organization(s)
+for which to create and count bigrams. Defaults to \code{NULL} (all
+organizations).}
 }
 \value{
 
 }
 \description{
-Title
+For a given text, calculate indicators of "net positive" and "net negative"
+sentiment using the AFINN, Liu et al. and NRC dictionaries.
+}
+\references{
+\insertRef{SilgeDavid}{Rdpack}
 }

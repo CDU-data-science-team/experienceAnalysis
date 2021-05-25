@@ -1,4 +1,17 @@
-#' Title
+#' Order sentiment occurrence table by sentiment counts
+#'
+#' Order result of `calc_net_sentiment_per_tag{experienceAnalysis}` by the
+#' count of one or more NRC sentiments, and convert to "tidy" format.
+#'
+#' @param net_sentiment_wide_nrc A data frame/tibble derived from
+#'     calc_net_sentiment_per_tag{experienceAnalysis}.
+#' @param sorting_sentiments A string of vector of strings with the NRC
+#'     sentiments by which to sort the returned table. (To see all NRC
+#'     sentiments run `prep_sentiments_nrc()`). Order matters:
+#'     `c("anger", "fear")` will sort by "anger" first. Conversely,
+#'     `c("fear", "anger")` will sort by "fear" first.
+#' @param num_of_lines The number of records to return, overall or for
+#'     each group (if any).
 #'
 #' @return
 #' @export

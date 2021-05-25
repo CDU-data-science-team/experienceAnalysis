@@ -2,16 +2,41 @@
 % Please edit documentation in R/calc_bing_word_counts.R
 \name{calc_bing_word_counts}
 \alias{calc_bing_word_counts}
-\title{Title}
+\title{Counts of words with a positive or negative sentiment}
 \usage{
-calc_bing_word_counts(x, target_col_name, filter_organization, filter_class)
+calc_bing_word_counts(
+  x,
+  target_col_name,
+  text_col_name,
+  grouping_variables = NULL,
+  filter_main_group = NULL,
+  filter_class = NULL
+)
 }
 \arguments{
-\item{filter_class}{}
+\item{x}{A data frame with three columns: the column with the classes; the
+column with the text; and the column(s) with the group(s).}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{text_col_name}{A string with the column name of the text variable.}
+
+\item{grouping_variables}{A string or vector of strings with the column
+name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
+
+\item{filter_main_group}{A string with the name(s) of the organization(s)
+for which to count the words. Defaults to \code{NULL} (all
+organizations).}
+
+\item{filter_class}{A string or vector of strings with the name(s) of the
+class(es) for which to count the words. Defaults to
+\code{NULL} (all classes).}
 }
 \value{
-
+A data frame with three columns: word; sentiment ("positive" or
+"negative"); and count.
 }
 \description{
-Title
+Count the number of times a word with a positive or negative sentiment occurs
+in a given text.
 }

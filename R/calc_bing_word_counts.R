@@ -1,11 +1,23 @@
-#' Title
+#' Counts of words with a positive or negative sentiment
 #'
-#' @param x
-#' @param target_col_name
-#' @param filter_organization
-#' @param filter_class
+#' Count the number of times a word with a positive or negative sentiment occurs
+#' in a given text.
 #'
-#' @return
+#' @param x A data frame with three columns: the column with the classes; the
+#'     column with the text; and the column(s) with the group(s).
+#' @param target_col_name A string with the column name of the target variable.
+#' @param text_col_name A string with the column name of the text variable.
+#' @param grouping_variables A string or vector of strings with the column
+#'     name(s) (if any) of the grouping variable(s). Defaults to `NULL`.
+#' @param filter_class A string or vector of strings with the name(s) of the
+#'     class(es) for which to count the words. Defaults to
+#'     `NULL` (all classes).
+#' @param filter_main_group A string with the name(s) of the organization(s)
+#'     for which to count the words. Defaults to `NULL` (all
+#'     organizations).
+#'
+#' @return A data frame with three columns: word; sentiment ("positive" or
+#'     "negative"); and count.
 #' @export
 #'
 #' @examples

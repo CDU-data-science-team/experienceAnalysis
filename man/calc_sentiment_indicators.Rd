@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_sentiment_indicators.R
 \name{calc_sentiment_indicators}
 \alias{calc_sentiment_indicators}
-\title{Title}
+\title{Calculate TextBlob sentiment indicators}
 \usage{
 calc_sentiment_indicators(
   x,
@@ -10,7 +10,8 @@ calc_sentiment_indicators(
   which_python,
   which_venv,
   venv_name,
-  make_table = TRUE
+  make_table = TRUE,
+  text_col_name
 )
 }
 \arguments{
@@ -20,5 +21,5 @@ calc_sentiment_indicators(
 
 }
 \description{
-Title
+Calculate TextBlob sentiment indicators
 }

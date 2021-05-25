@@ -1,11 +1,22 @@
-#' Title
+#' Calculate the confusion matrix for each group
 #'
-#' @param x
-#' @param target_col_name
-#' @param target_pred_col_name
-#' @param grouping_variables
+#' Calculates the confusion matrix of observed and predicted classes, overall
+#' or for each group (if any).
 #'
-#' @return
+#' @param x A data frame with two or more columns, of which two should be
+#'     the following: the column with the actual classes; and the column with
+#'     the predicted classes. If there are grouping variables, the rest of the
+#'     columns should have the groups.
+#' @param target_col_name A string with the column name of the target variable.
+#' @param target_pred_col_name A string with the column name of the predictions
+#'     for the target variable.
+#' @param grouping_variables A string or vector of strings with the column
+#'     name(s) (if any) of the grouping variable(s). Defaults to `NULL`.
+#' @param ... Further arguments passed from other methods.
+#'
+#' @return A list with as many elements as the number of groups (no groups
+#'     returns a list with one element). Each element contains an object with
+#'     class `conf_mat()` (see `conf_mat{yardstick}`).
 #' @export
 #'
 #' @examples

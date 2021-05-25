@@ -1,12 +1,30 @@
-#' Title
+#' Calculate TF-IDFs for unigrams or bigrams
 #'
-#' @param x
-#' @param target_col_name
-#' @param filter_class
-#' @param filter_organization
-#' @param ngrams_type
+#' For a given labeled text, return the unigrams or bigrams with the 15
+#' largest TF-IDFs for the given class(es) and organization(s).
 #'
-#' @return
+#' @param x A data frame with three columns: the column with the classes; the
+#'     column with the text; and the column(s) with the group(s).
+#' @param target_col_name A string with the column name of the target variable.
+#' @param text_col_name A string with the column name of the text variable.
+#' @param grouping_variables A string or vector of strings with the column
+#'     name(s) (if any) of the grouping variable(s). Defaults to `NULL`.
+#' @param filter_class A string or vector of strings with the name(s) of the
+#'     class(es) for which TF-IDFs are to be calculated. Defaults to
+#'     `NULL` (all classes).
+#' @param filter_main_group A string with the name(s) of the organization(s)
+#'     for which to calculate TF-IDFs. Defaults to `NULL` (all
+#'     organizations).
+#' @param ngrams_type A string. Should be "Unigrams" for unigrams and "Bigrams"
+#'     for bigrams.
+#'
+#' @note When supplying more than one organization and/or class, the returned
+#'     data frame will NOT separate the results for the different organizations
+#'     and/or classes, i.e. the function sees multiple organizations and/or
+#'     classes as one.
+#'
+#' @return A data frame with six columns: class; n-gram (word or bigram); count;
+#'     term-frequency; inverse document frequency; and TF-IDF.
 #' @export
 #'
 #' @examples

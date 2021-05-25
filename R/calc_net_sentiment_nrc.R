@@ -1,10 +1,20 @@
-#' Title
+#' Calculate "net sentiment" in a text
 #'
-#' @param text_data
-#' @param class_col_name
-#' @param org_col_name
-#' @param filter_class
-#' @param filter_organization
+#' For a given text, translate all words into NRC sentiments and count sentiment
+#' occurrences.
+#'
+#' @param x A data frame with three columns: the column with the classes; the
+#'     column with the text; and the column(s) with the group(s).
+#' @param target_col_name A string with the column name of the target variable.
+#' @param text_col_name A string with the column name of the text variable.
+#' @param grouping_variables A string or vector of strings with the column
+#'     name(s) (if any) of the grouping variable(s). Defaults to `NULL`.
+#' @param filter_class A string or vector of strings with the name(s) of the
+#'     class(es) for which bigrams are to be created and counted. Defaults to
+#'     `NULL` (all classes).
+#' @param filter_main_group A string with the name(s) of the organization(s)
+#'     for which to create and count bigrams. Defaults to `NULL` (all
+#'     organizations).
 #'
 #' @return
 #' @export

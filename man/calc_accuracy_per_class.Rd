@@ -26,7 +26,7 @@ for the target variable.}
 \item{grouping_variables}{A string or vector of strings with the column
 name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
 
-\item{column_names}{A vector of strings, \code{NULL} or "px", used to specify the
+\item{column_names}{A vector of strings or \code{NULL}, used to specify the
 names of the returned data frame/tibble. See Details.}
 }
 \value{
@@ -34,20 +34,20 @@ A data frame/tibble with as many rows as the number of unique labels
 for each group (if any). See Details.
 }
 \description{
-Calculates the accuracy of a predictive model for each class and given group
+Calculates the accuracy of a predictive model for each class and group
 (if any).
 }
 \details{
 This function was originally designed for use with package
-\href{https://github.com/CDU-data-science-team/pxtextminingdashboard}{\code{{pxtextminingdashboard}}}.
-It can, however, be used outside the context of \code{{pxtextmining}}, by
-controlling the \code{column_names} argument:
-- When \code{column_names == "px"}, the returned data frame has at least three
-columns, namely, "organization" (the group), "class" (the label) and
-"accuracy". When there are more than one groups, the first one is
+\href{https://github.com/CDU-data-science-team/pxtextminingdashboard}{\code{{pxtextminingdashboard}}},
+in which case \code{column_names} is set to \code{c("organization", "class", "accuracy")}. It can, however, be used outside the context of
+\code{{pxtextminingdashboard}}, by controlling the \code{column_names} argument:
+\itemize{
+\item{When \code{column_names} is \code{NULL}, then the returned data frame names
+are \code{c(grouping_variables, target_col_name, "accuracy")}.}
+\item{When \code{column_names} is a vector of strings, the returned data
+frame names are as in the vector.}
+}
+I NEED TO CLARIFY THIS: When there are more than one groups, the first one is
 considered to be the "main" one and is named "organization" by default.
-- When \code{column_names} is \code{NULL}, then the returned data frame names are
-\code{c(grouping_variables, target_col_name, "accuracy")}.
-- When \code{column_names} is a vector of strings, the returned data frame
-names are as in the vector.
 }
