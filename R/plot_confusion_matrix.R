@@ -3,7 +3,7 @@
 #' @param x
 #' @param target_col_name
 #' @param target_pred_col_name
-#' @param grouping_variable
+#' @param grouping_variables
 #' @param type
 #'
 #' @return
@@ -12,11 +12,11 @@
 #' @examples
 
 plot_confusion_matrix <- function(x, target_col_name, target_pred_col_name,
-                                  grouping_variable = NULL, type = "heatmap") {
+                                  grouping_variables = NULL, type = "heatmap") {
 
   cm <- experienceAnalysis::calc_confusion_matrix(x, target_col_name,
                                                   target_pred_col_name,
-                                                  grouping_variable)
+                                                  grouping_variables)
 
   cm %>%
     lapply(
