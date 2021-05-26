@@ -37,7 +37,7 @@
 
 calc_accuracy_per_class <- function(x, target_col_name, target_pred_col_name,
                                     grouping_variables = NULL,
-                                    column_names = c(NULL, "px"))
+                                    column_names = NULL)
   {
 
   column_names <- experienceAnalysis::prep_colnames_and_filters(
