@@ -35,7 +35,7 @@ plot_confusion_matrix <- function(x, target_col_name, target_pred_col_name,
             prop = round(Freq / sum(Freq) * 100),
             bin = dplyr::case_when(
               dplyr::between(prop, 0, 9) ~ "gray88",
-              dplyr::between(prop, 10, 19) ~ "gray87",
+              dplyr::between(prop, 10, 19) ~ "gray80",
               dplyr::between(prop, 20, 29) ~ "gray73",
               dplyr::between(prop, 30, 39) ~ "gray61",
               dplyr::between(prop, 40, 59) ~ "gray57",
