@@ -17,7 +17,6 @@
 #' @export
 #'
 #' @examples
-#' @references \insertRef{SilgeDavid}{Rdpack}
 #'
 #'
 #' @importFrom Rdpack reprompt
