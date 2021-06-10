@@ -17,6 +17,7 @@
 #'     organizations).
 #' @param ngrams_type A string. Should be "Unigrams" for unigrams and "Bigrams"
 #'     for bigrams.
+#' @param number_of_ngrams Integer. Number of ngrams to return. Defaults to all.
 #'
 #' @note When supplying more than one organization and/or class, the returned
 #'     data frame will NOT separate the results for the different organizations
@@ -32,7 +33,8 @@
 calc_tfidf_ngrams <- function(x, target_col_name, text_col_name,
                               grouping_variables = NULL,
                               filter_class = NULL, filter_main_group = NULL,
-                              ngrams_type = c("Unigrams", "Bigrams")) {
+                              ngrams_type = c("Unigrams", "Bigrams"),
+                              number_of_ngrams = NULL) {
 
   aux <- experienceAnalysis::prep_colnames_and_filters(
     x, grouping_variables,
@@ -45,6 +47,12 @@ calc_tfidf_ngrams <- function(x, target_col_name, text_col_name,
   main_group_col_name <- aux$main_group_col_name
 
   ngrams_n <- ifelse(ngrams_type == "Unigrams", 1, 2)
+
+  number_of_ngrams <- ifelse(
+    is.null(number_of_ngrams),
+    nrow(.),
+    number_of_ngrams
+  )
 
   tfidf_ngrams <- x %>%
     dplyr::filter(
@@ -73,7 +81,8 @@ calc_tfidf_ngrams <- function(x, target_col_name, text_col_name,
         dplyr::all_of(target_col_name),
         ~ . %in% filter_class
       )
-    )
+    ) %>%
+    dplyr::slice(1:number_of_ngrams)
 
   return(tfidf_ngrams)
 }
