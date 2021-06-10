@@ -38,7 +38,8 @@ calc_bing_word_counts <- function(x, target_col_name, text_col_name,
   main_group_col_name <- aux$main_group_col_name
 
   tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name,
-                                                          text_col_name)
+                                                          text_col_name,
+                                                          grouping_variables)
 
   # Most common positive and negative words
   bing_word_counts <- tidy_feedback %>%

@@ -27,7 +27,8 @@ calc_net_sentiment_per_tag <- function(x, target_col_name, text_col_name,
                                        filter_main_group = NULL) {
 
   tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name,
-                                                          text_col_name)
+                                                          text_col_name,
+                                                          grouping_variables)
 
   aux <- experienceAnalysis::prep_colnames_and_filters(
     x, grouping_variables,
