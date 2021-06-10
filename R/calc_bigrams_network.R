@@ -56,7 +56,7 @@ calc_bigrams_network <- function(x, target_col_name, text_col_name,
         ~ . %in% filter_class
       )
     ) %>%
-    tidytext::unnest_tokens(bigram, !! text_col_name,
+    tidytext::unnest_tokens(bigram, !! rlang::sym(text_col_name),
                             token = "ngrams", n = 2) %>%
     tidyr::separate(bigram, c("word1", "word2"), sep = " ") %>%
     dplyr::filter(

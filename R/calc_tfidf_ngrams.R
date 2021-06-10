@@ -53,7 +53,7 @@ calc_tfidf_ngrams <- function(x, target_col_name, text_col_name,
         ~ . %in% filter_main_group
       )
     ) %>%
-    tidytext::unnest_tokens(ngram, !! text_col_name,
+    tidytext::unnest_tokens(ngram, !! rlang::sym(text_col_name),
                             token = "ngrams", n = ngrams_n) %>%
     tidyr::separate(ngram, paste0("word", 1:ngrams_n), sep = " ") %>%
     dplyr::filter( # Do this because some stop words make it through the TF-IDF filtering that happens below.
@@ -64,7 +64,7 @@ calc_tfidf_ngrams <- function(x, target_col_name, text_col_name,
     ) %>%
     tidyr::unite(col = "ngram", paste0("word", 1:ngrams_n), sep = " ") %>%
     dplyr::count(dplyr::across(dplyr::all_of(target_col_name)), ngram, sort = TRUE) %>%
-    tidytext::bind_tf_idf(ngram, !! target_col_name, n) %>% # {{}} doesn't work here. Use !! instead.
+    tidytext::bind_tf_idf(ngram, !! rlang::sym(target_col_name), n) %>% # {{}} doesn't work here. Use !! instead.
     dplyr::group_by(dplyr::across(dplyr::all_of(target_col_name))) %>%
     dplyr::slice_max(tf_idf, n = 15) %>%
     dplyr::ungroup() %>%

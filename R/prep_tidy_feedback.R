@@ -31,7 +31,7 @@ prep_tidy_feedback <- function(x, target_col_name, text_col_name,
       dplyr::across(dplyr::all_of(c(target_col_name, main_group_col_name)))
     ) %>%
     dplyr::mutate(linenumber = dplyr::row_number()) %>%
-    tidytext::unnest_tokens(word, !! text_col_name) %>%
+    tidytext::unnest_tokens(word, !! rlang::sym(text_col_name)) %>%
     dplyr::ungroup()
 
   return(tidy_feedback)
