@@ -9,7 +9,7 @@ calc_accuracy_per_class(
   target_col_name,
   target_pred_col_name,
   grouping_variables = NULL,
-  column_names = c(NULL, "px")
+  column_names = NULL
 )
 }
 \arguments{

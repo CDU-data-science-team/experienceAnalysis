@@ -34,6 +34,7 @@ organizations).}
 For a given text, calculate indicators of "net positive" and "net negative"
 sentiment using the AFINN, Liu et al. and NRC dictionaries.
 }
-\references{
-\insertRef{SilgeDavid}{Rdpack}
+\examples{
+
+
 }
