@@ -11,7 +11,8 @@ calc_tfidf_ngrams(
   grouping_variables = NULL,
   filter_class = NULL,
   filter_main_group = NULL,
-  ngrams_type = c("Unigrams", "Bigrams")
+  ngrams_type = c("Unigrams", "Bigrams"),
+  number_of_ngrams = NULL
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ organizations).}
 
 \item{ngrams_type}{A string. Should be "Unigrams" for unigrams and "Bigrams"
 for bigrams.}
+
+\item{number_of_ngrams}{Integer. Number of ngrams to return. Defaults to all.}
 }
 \value{
 A data frame with six columns: class; n-gram (word or bigram); count;
