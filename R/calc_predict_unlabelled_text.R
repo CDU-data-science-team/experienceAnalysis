@@ -29,23 +29,21 @@
 #'
 #' @examples
 
-calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv,
-                                         venv_name,
-                                         file_path = NULL,
+calc_predict_unlabelled_text <- function(x, file_path = NULL,
                                          predictor, pipe_path,
                                          preds_column = NULL,
                                          column_names = NULL) {
 
-  Sys.setenv(RETICULATE_PYTHON = sys_setenv)
-  reticulate::use_python(which_python)
-
-  if (which_venv == 'conda') {
-    reticulate::use_condaenv(venv_name, required = TRUE)
-  } else if (which_venv == 'miniconda') {
-    reticulate::use_miniconda(venv_name, required = TRUE)
-  } else if (which_venv == 'python') {
-    reticulate::use_virtualenv(venv_name, required = TRUE)
-  }
+  # Sys.setenv(RETICULATE_PYTHON = sys_setenv)
+  # reticulate::use_python(which_python)
+  #
+  # if (which_venv == 'conda') {
+  #   reticulate::use_condaenv(venv_name, required = TRUE)
+  # } else if (which_venv == 'miniconda') {
+  #   reticulate::use_miniconda(venv_name, required = TRUE)
+  # } else if (which_venv == 'python') {
+  #   reticulate::use_virtualenv(venv_name, required = TRUE)
+  # }
 
   factory_predict_unlabelled_text_r <-
     reticulate::py_run_string(

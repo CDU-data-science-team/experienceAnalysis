@@ -6,10 +6,6 @@
 \usage{
 calc_predict_unlabelled_text(
   x,
-  sys_setenv,
-  which_python,
-  which_venv,
-  venv_name,
   file_path = NULL,
   predictor,
   pipe_path,
@@ -20,15 +16,6 @@ calc_predict_unlabelled_text(
 \arguments{
 \item{x}{A data frame with the text data to predict classes for. If
 \code{file_path} (see below) is not \code{NULL}, then \code{x} should be \code{NULL}.}
-
-\item{sys_setenv}{A string in the form "path_to_python/python.exe",
-indicating which Python to use (e.g. from a virtual environment).}
-
-\item{which_python}{Same as \code{sys_setenv}.}
-
-\item{which_venv}{A string that can be "conda", "miniconda" or "python".}
-
-\item{venv_name}{String. The name of the virtual environment.}
 
 \item{file_path}{A string in the form "path_to_data/filename.csv", where
 "filename" is the name of the CSV file with the data. If \code{NULL}, the
@@ -48,6 +35,15 @@ will have the predictions. If \code{NULL} (default), then the name will be
 supplied data frame (incl. \code{predictor}) to be added to the returned data
 frame. If \code{NULL}, then the only column in the returned data frame will be
 \code{preds_column.}}
+
+\item{sys_setenv}{A string in the form "path_to_python/python.exe",
+indicating which Python to use (e.g. from a virtual environment).}
+
+\item{which_python}{Same as \code{sys_setenv}.}
+
+\item{which_venv}{A string that can be "conda", "miniconda" or "python".}
+
+\item{venv_name}{String. The name of the virtual environment.}
 }
 \value{
 
