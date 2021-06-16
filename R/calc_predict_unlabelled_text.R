@@ -12,15 +12,15 @@
 #' @param file_path A string in the form "path_to_data/filename.csv", where
 #'     "filename" is the name of the CSV file with the data. If `NULL`, the
 #'     function uses x.
-#' @param predictor A string with the name of the text column.
+#' @param text_col_name A string with the column name of the text variable.
 #' @param pipe_path A string in the form "path_to_fitted_pipeline/pipeline.sav,"
 #'     where "pipeline" is the name of the SAV file with the fitted
 #'     `Scikit-learn` pipeline.
 #' @param preds_column A string with the user-specified name of the column that
 #'     will have the predictions. If `NULL` (default), then the name will be
-#'     `paste0(predictor, "_preds")`.
+#'     `paste0(text_col_name, "_preds")`.
 #' @param column_names A vector of strings with the names of the columns of the
-#'     supplied data frame (incl. `predictor`) to be added to the returned data
+#'     supplied data frame (incl. `text_col_name`) to be added to the returned data
 #'     frame. If `NULL`, then the only column in the returned data frame will be
 #'     `preds_column.`
 #'
@@ -32,7 +32,7 @@
 calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv,
                                          venv_name,
                                          file_path = NULL,
-                                         predictor, pipe_path,
+                                         text_col_name, pipe_path,
                                          preds_column = NULL,
                                          column_names = NULL) {
 
@@ -57,12 +57,12 @@ calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv
     x_py <- reticulate::r_to_py(x)
 
     predictions <- factory_predict_unlabelled_text_r(
-      file_path=file_path, dataset=x_py, predictor=predictor,
+      file_path=file_path, dataset=x_py, predictor=text_col_name,
       pipe_path=pipe_path, preds_column=preds_column,
       column_names=reticulate::r_to_py(column_names))
   } else {
     predictions <- factory_predict_unlabelled_text_r(
-      file_path=file_path, dataset=NULL, predictor=predictor,
+      file_path=file_path, dataset=NULL, predictor=text_col_name,
       pipe_path=pipe_path, preds_column=preds_column,
       column_names=reticulate::r_to_py(column_names))
   }
