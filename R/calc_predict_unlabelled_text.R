@@ -42,7 +42,7 @@ calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv
     reticulate::use_virtualenv(venv_name, required = TRUE)
   }
 
-  if (column_names == '__all__') {
+  if (all(column_names == '__all__')) {
     column_names <- names(x)
   }
 
