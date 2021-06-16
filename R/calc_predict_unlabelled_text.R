@@ -3,6 +3,12 @@
 #' For internal use only!
 #'
 #' @param x A data frame with the text data to predict classes for.
+#' @param python_setup A `logical` whether to set up the `Python` version,
+#'     virtual environment etc. that can be controlled with arguments
+#'     `sys_setenv`, `which_python`, `which_venv` and `venv_name`. These
+#'     arguments will be ignored when `python_setup` is `FALSE`. The purpose of
+#'     `python_setup` is that users may wish to control the `Python` parameters
+#'     outside the actual function, for the session in general.
 #' @param sys_setenv A string in the form "path_to_python/python.exe",
 #'     indicating which Python to use (e.g. from a virtual environment).
 #' @param which_python Same as `sys_setenv`.
@@ -25,22 +31,23 @@
 #'
 #' @examples
 
-calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv,
-                                         venv_name,
+calc_predict_unlabelled_text <- function(x, python_setup = TRUE, sys_setenv,
+                                         which_python, which_venv, venv_name,
                                          text_col_name, pipe_path,
                                          preds_column = NULL,
                                          column_names = NULL) {
 
-  Sys.setenv(RETICULATE_PYTHON = sys_setenv)
-  reticulate::use_python(which_python)
+  if (python_setup) {
+    Sys.setenv(RETICULATE_PYTHON = sys_setenv)
+    reticulate::use_python(which_python)
 
-  if (which_venv == 'conda') {
-    reticulate::use_condaenv(venv_name, required = TRUE)
-  } else if (which_venv == 'miniconda') {
-    reticulate::use_miniconda(venv_name, required = TRUE)
-  } else if (which_venv == 'python') {
-    reticulate::use_virtualenv(venv_name, required = TRUE)
-  }
+    if (which_venv == 'conda') {
+      reticulate::use_condaenv(venv_name, required = TRUE)
+    } else if (which_venv == 'miniconda') {
+      reticulate::use_miniconda(venv_name, required = TRUE)
+    } else if (which_venv == 'python') {
+      reticulate::use_virtualenv(venv_name, required = TRUE)
+    }
 
   if (all(column_names == '__all__')) {
     column_names <- names(x)
