@@ -18,7 +18,7 @@
 #' @param column_names A vector of strings with the names of the columns of the
 #'     supplied data frame (incl. `text_col_name`) to be added to the returned data
 #'     frame. If `NULL`, then the only column in the returned data frame will be
-#'     `preds_column.`
+#'     `preds_column.` Defaults to "__all__".
 #'
 #' @return
 #' @export
@@ -40,6 +40,10 @@ calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv
     reticulate::use_miniconda(venv_name, required = TRUE)
   } else if (which_venv == 'python') {
     reticulate::use_virtualenv(venv_name, required = TRUE)
+  }
+
+  if (column_names == '__all__') {
+    column_names <- names(x)
   }
 
   factory_predict_unlabelled_text_r <-
