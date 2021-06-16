@@ -2,16 +2,12 @@
 #'
 #' For internal use only!
 #'
-#' @param x A data frame with the text data to predict classes for. If
-#'     `file_path` (see below) is not `NULL`, then `x` should be `NULL`.
+#' @param x A data frame with the text data to predict classes for.
 #' @param sys_setenv A string in the form "path_to_python/python.exe",
 #'     indicating which Python to use (e.g. from a virtual environment).
 #' @param which_python Same as `sys_setenv`.
 #' @param which_venv A string that can be "conda", "miniconda" or "python".
 #' @param venv_name String. The name of the virtual environment.
-#' @param file_path A string in the form "path_to_data/filename.csv", where
-#'     "filename" is the name of the CSV file with the data. If `NULL`, the
-#'     function uses x.
 #' @param text_col_name A string with the column name of the text variable.
 #' @param pipe_path A string in the form "path_to_fitted_pipeline/pipeline.sav,"
 #'     where "pipeline" is the name of the SAV file with the fitted
@@ -31,7 +27,6 @@
 
 calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv,
                                          venv_name,
-                                         file_path = NULL,
                                          text_col_name, pipe_path,
                                          preds_column = NULL,
                                          column_names = NULL) {
@@ -53,19 +48,13 @@ calc_predict_unlabelled_text <- function(x, sys_setenv, which_python, which_venv
     )$
     factory_predict_unlabelled_text
 
-  if (is.null(file_path)) {
-    x_py <- reticulate::r_to_py(x)
-
-    predictions <- factory_predict_unlabelled_text_r(
-      file_path=file_path, dataset=x_py, predictor=text_col_name,
-      pipe_path=pipe_path, preds_column=preds_column,
-      column_names=reticulate::r_to_py(column_names))
-  } else {
-    predictions <- factory_predict_unlabelled_text_r(
-      file_path=file_path, dataset=NULL, predictor=text_col_name,
-      pipe_path=pipe_path, preds_column=preds_column,
-      column_names=reticulate::r_to_py(column_names))
-  }
+  predictions <- factory_predict_unlabelled_text_r(
+    dataset=reticulate::r_to_py(x),
+    predictor=text_col_name,
+    pipe_path=pipe_path,
+    preds_column=preds_column,
+    column_names=reticulate::r_to_py(column_names)
+  )
 
   return(predictions)
 }
