@@ -6,35 +6,26 @@
 \usage{
 calc_predict_unlabelled_text(
   x,
-  file_path = NULL,
-  predictor,
+  python_setup = TRUE,
+  sys_setenv,
+  which_python,
+  which_venv,
+  venv_name,
+  text_col_name,
   pipe_path,
   preds_column = NULL,
   column_names = NULL
 )
 }
 \arguments{
-\item{x}{A data frame with the text data to predict classes for. If
-\code{file_path} (see below) is not \code{NULL}, then \code{x} should be \code{NULL}.}
+\item{x}{A data frame with the text data to predict classes for.}
 
-\item{file_path}{A string in the form "path_to_data/filename.csv", where
-"filename" is the name of the CSV file with the data. If \code{NULL}, the
-function uses x.}
-
-\item{predictor}{A string with the name of the text column.}
-
-\item{pipe_path}{A string in the form "path_to_fitted_pipeline/pipeline.sav,"
-where "pipeline" is the name of the SAV file with the fitted
-\code{Scikit-learn} pipeline.}
-
-\item{preds_column}{A string with the user-specified name of the column that
-will have the predictions. If \code{NULL} (default), then the name will be
-\code{paste0(predictor, "_preds")}.}
-
-\item{column_names}{A vector of strings with the names of the columns of the
-supplied data frame (incl. \code{predictor}) to be added to the returned data
-frame. If \code{NULL}, then the only column in the returned data frame will be
-\code{preds_column.}}
+\item{python_setup}{A \code{logical} whether to set up the \code{Python} version,
+virtual environment etc. that can be controlled with arguments
+\code{sys_setenv}, \code{which_python}, \code{which_venv} and \code{venv_name}. These
+arguments will be ignored when \code{python_setup} is \code{FALSE}. The purpose of
+\code{python_setup} is that users may wish to control the \code{Python} parameters
+outside the actual function, for the session in general.}
 
 \item{sys_setenv}{A string in the form "path_to_python/python.exe",
 indicating which Python to use (e.g. from a virtual environment).}
@@ -44,6 +35,21 @@ indicating which Python to use (e.g. from a virtual environment).}
 \item{which_venv}{A string that can be "conda", "miniconda" or "python".}
 
 \item{venv_name}{String. The name of the virtual environment.}
+
+\item{text_col_name}{A string with the column name of the text variable.}
+
+\item{pipe_path}{A string in the form "path_to_fitted_pipeline/pipeline.sav,"
+where "pipeline" is the name of the SAV file with the fitted
+\code{Scikit-learn} pipeline.}
+
+\item{preds_column}{A string with the user-specified name of the column that
+will have the predictions. If \code{NULL} (default), then the name will be
+\code{paste0(text_col_name, "_preds")}.}
+
+\item{column_names}{A vector of strings with the names of the columns of the
+supplied data frame (incl. \code{text_col_name}) to be added to the returned data
+frame. If \code{NULL}, then the only column in the returned data frame will be
+\code{preds_column.} Defaults to "\strong{all}".}
 }
 \value{
 
