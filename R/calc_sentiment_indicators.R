@@ -31,8 +31,8 @@ calc_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
     "from pxtextmining.helpers.sentiment_scores import sentiment_scores"
   )
 
-    dplyr::rename(predictor = {{text_col_name}}) %>%
   sentiments_table <- x %>%
+    dplyr::select(dplyr::all_of(text_col_name)) %>%
     sentiment_scores$sentiment_scores() %>%
     dplyr::select(text_blob_polarity) %>%
     dplyr::rename(polarity = text_blob_polarity) %>%
