@@ -35,7 +35,7 @@ calc_predict_unlabelled_text <- function(x, python_setup = TRUE, sys_setenv,
                                          which_python, which_venv, venv_name,
                                          text_col_name, pipe_path,
                                          preds_column = NULL,
-                                         column_names = NULL) {
+                                         column_names = "__all__") {
 
   if (python_setup) {
     Sys.setenv(RETICULATE_PYTHON = sys_setenv)
