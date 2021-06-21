@@ -31,8 +31,8 @@ calc_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
     "from pxtextmining.helpers.sentiment_scores import sentiment_scores"
   )
 
-  polarity_textblob <- x %>%
     dplyr::rename(predictor = {{text_col_name}}) %>%
+  sentiments_table <- x %>%
     sentiment_scores$sentiment_scores() %>%
     dplyr::select(text_blob_polarity) %>%
     dplyr::rename(polarity = text_blob_polarity) %>%
@@ -40,7 +40,7 @@ calc_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
 
   if (make_table) {
 
-    polarity_textblob <- polarity_textblob %>%
+    sentiments_table <- sentiments_table %>%
       dplyr::left_join(x) %>%
       dplyr::filter(
         dplyr::across(dplyr::any_of("super"), ~ . != "Couldn't be improved")
@@ -56,5 +56,5 @@ calc_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
       )
   }
 
-  return(polarity_textblob)
+  return(sentiments_table)
 }
