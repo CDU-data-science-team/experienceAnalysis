@@ -23,8 +23,8 @@
 #'     `paste0(text_col_name, "_preds")`.
 #' @param column_names A vector of strings with the names of the columns of the
 #'     supplied data frame (incl. `text_col_name`) to be added to the returned data
-#'     frame. If `NULL`, then the only column in the returned data frame will be
-#'     `preds_column.` Defaults to "__all__".
+#'     frame. If "preds_only", then the only column in the returned data frame will be
+#'     `preds_column.` Defaults to "all_cols".
 #'
 #' @return
 #' @export
@@ -35,7 +35,7 @@ calc_predict_unlabelled_text <- function(x, python_setup = TRUE, sys_setenv,
                                          which_python, which_venv, venv_name,
                                          text_col_name, pipe_path,
                                          preds_column = NULL,
-                                         column_names = "__all__") {
+                                         column_names = "all_cols") {
 
   if (python_setup) {
     Sys.setenv(RETICULATE_PYTHON = sys_setenv)
@@ -50,8 +50,17 @@ calc_predict_unlabelled_text <- function(x, python_setup = TRUE, sys_setenv,
     }
   }
 
-  if (all(column_names == '__all__')) {
+  # The behaviour of {reticulate} is not clear. If the user passes "all_cols" or
+  # "preds_only" directly into column_names in the Python function, without the
+  # if/else below, then the Python function will throw this error:
+  # TypeError: 'DataFrame' objects are mutable, thus they cannot be hashed
+  # This is weird- in theory, we are passing an R string that {reticulate} should
+  # convert into a Python string, expecting that the Python function would
+  # handle in an internal if/else statement.
+  if (all(column_names == "all_cols")) {
     column_names <- names(x)
+  } else if (all(column_names == "preds_only")) {
+    column_names <- NULL
   }
 
   factory_predict_unlabelled_text_r <-
@@ -61,7 +70,7 @@ calc_predict_unlabelled_text <- function(x, python_setup = TRUE, sys_setenv,
     factory_predict_unlabelled_text
 
   predictions <- factory_predict_unlabelled_text_r(
-    dataset=reticulate::r_to_py(x),
+    dataset=x,
     predictor=text_col_name,
     pipe_path=pipe_path,
     preds_column=preds_column,
