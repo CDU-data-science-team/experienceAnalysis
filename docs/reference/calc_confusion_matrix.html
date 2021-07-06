@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate the confusion matrix for each group — calc_confusion_matrix • experienceAnalysis</title>
+<title>Calculate the confusion matrix — calc_confusion_matrix • experienceAnalysis</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Calculate the confusion matrix for each group — calc_confusion_matrix" />
-<meta property="og:description" content="Calculates the confusion matrix of observed and predicted classes, overall
-or for each group (if any)." />
+<meta property="og:title" content="Calculate the confusion matrix — calc_confusion_matrix" />
+<meta property="og:description" content="Calculates the confusion matrix of observed and predicted classes, after
+converting them into factors first (not currently done by
+conf_mat{yardstick})." />
 
 
 
@@ -104,33 +105,27 @@ or for each group (if any)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate the confusion matrix for each group</h1>
+    <h1>Calculate the confusion matrix</h1>
     
     <div class="hidden name"><code>calc_confusion_matrix.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculates the confusion matrix of observed and predicted classes, overall
-or for each group (if any).</p>
+    <p>Calculates the confusion matrix of observed and predicted classes, after
+converting them into factors first (not currently done by
+<code>conf_mat{yardstick}</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calc_confusion_matrix</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  <span class='va'>target_col_name</span>,
-  <span class='va'>target_pred_col_name</span>,
-  grouping_variables <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>calc_confusion_matrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>target_col_name</span>, <span class='va'>target_pred_col_name</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame with two or more columns, of which two should be
-the following: the column with the actual classes; and the column with
-the predicted classes. If there are grouping variables, the rest of the
-columns should have the groups.</p></td>
+      <td><p>A data frame with two columns: the column with the actual classes;
+and the column with the predicted classes. Any other columns will be
+ignored.</p></td>
     </tr>
     <tr>
       <th>target_col_name</th>
@@ -142,11 +137,6 @@ columns should have the groups.</p></td>
 for the target variable.</p></td>
     </tr>
     <tr>
-      <th>grouping_variables</th>
-      <td><p>A string or vector of strings with the column
-name(s) (if any) of the grouping variable(s). Defaults to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Further arguments passed from other methods.</p></td>
     </tr>
@@ -154,9 +144,7 @@ name(s) (if any) of the grouping variable(s). Defaults to <code>NULL</code>.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with as many elements as the number of groups (no groups
-returns a list with one element). Each element contains an object with
-class <code>conf_mat()</code> (see <code>conf_mat{yardstick}</code>).</p>
+    <p>An object with class <code>conf_mat()</code> (see <code>conf_mat{yardstick}</code>).</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

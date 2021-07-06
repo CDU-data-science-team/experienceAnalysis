@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Calculate TF-IDFs for unigrams or bigrams — calc_tfidf_ngrams" />
-<meta property="og:description" content="For a given labeled text, return the unigrams or bigrams with the 15
-largest TF-IDFs for the given class(es) and organization(s)." />
+<meta property="og:description" content="For a given labelled text, return the unigrams or bigrams with the
+largest TF-IDFs for the given class(es)." />
 
 
 
@@ -110,17 +110,15 @@ largest TF-IDFs for the given class(es) and organization(s)." />
     </div>
 
     <div class="ref-description">
-    <p>For a given labeled text, return the unigrams or bigrams with the 15
-largest TF-IDFs for the given class(es) and organization(s).</p>
+    <p>For a given labelled text, return the unigrams or bigrams with the
+largest TF-IDFs for the given class(es).</p>
     </div>
 
     <pre class="usage"><span class='fu'>calc_tfidf_ngrams</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>target_col_name</span>,
   <span class='va'>text_col_name</span>,
-  grouping_variables <span class='op'>=</span> <span class='cn'>NULL</span>,
   filter_class <span class='op'>=</span> <span class='cn'>NULL</span>,
-  filter_main_group <span class='op'>=</span> <span class='cn'>NULL</span>,
   ngrams_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Unigrams"</span>, <span class='st'>"Bigrams"</span><span class='op'>)</span>,
   number_of_ngrams <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
@@ -130,33 +128,23 @@ largest TF-IDFs for the given class(es) and organization(s).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame with three columns: the column with the classes; the
-column with the text; and the column(s) with the group(s).</p></td>
+      <td><p>A data frame with two columns: the column with the classes; and the
+column with the text.</p></td>
     </tr>
     <tr>
       <th>target_col_name</th>
-      <td><p>A string with the column name of the target variable.</p></td>
+      <td><p>A string with the column name of the target variable.
+It is equivalent to argument <code>document</code> in <code>bind_tf_idf{tidytext}</code>.</p></td>
     </tr>
     <tr>
       <th>text_col_name</th>
       <td><p>A string with the column name of the text variable.</p></td>
     </tr>
     <tr>
-      <th>grouping_variables</th>
-      <td><p>A string or vector of strings with the column
-name(s) (if any) of the grouping variable(s). Defaults to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
       <th>filter_class</th>
       <td><p>A string or vector of strings with the name(s) of the
 class(es) for which TF-IDFs are to be calculated. Defaults to
 <code>NULL</code> (all classes).</p></td>
-    </tr>
-    <tr>
-      <th>filter_main_group</th>
-      <td><p>A string with the name(s) of the organization(s)
-for which to calculate TF-IDFs. Defaults to <code>NULL</code> (all
-organizations).</p></td>
     </tr>
     <tr>
       <th>ngrams_type</th>
@@ -175,10 +163,19 @@ for bigrams.</p></td>
 term-frequency; inverse document frequency; and TF-IDF.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>When supplying more than one organization and/or class, the returned
-data frame will NOT separate the results for the different organizations
-and/or classes, i.e. the function sees multiple organizations and/or
-classes as one.</p>
+    <p>Unlike other functions in <code>experienceAnalysis</code> (e.g.
+<code><a href='calc_net_sentiment_nrc.html'>calc_net_sentiment_nrc</a></code>), here it does not make
+sense to have <code>target_col_name</code> set to <code>NULL</code>- the TF-IDF of an n-gram is
+a function of the number of "documents" containing it (see Silge and
+Robinson, 2017), so there must be at least two classes (or "documents")
+to use in the calculations. <br /><br />
+When <code>filter_class</code> is not <code>NULL</code>, the TF-IDFs will <em>still</em> be
+calculated using <em>all</em> classes/documents and <em>then</em> filtered by
+<code>filter_class</code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Silge J. &amp; Robinson D. (2017). Text Mining with R: A Tidy
+Approach. Sebastopol, CA: O’Reilly Media. ISBN 978-1-491-98165-8.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

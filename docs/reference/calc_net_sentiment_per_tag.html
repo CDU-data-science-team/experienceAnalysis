@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Calculate "net positive" and "net negative" sentiment in a text — calc_net_sentiment_per_tag" />
-<meta property="og:description" content="For a given text, calculate indicators of &quot;net positive&quot; and &quot;net negative&quot;
-sentiment using the AFINN, Liu et al. and NRC dictionaries." />
+<meta property="og:description" content="For a given text and class, calculate indicators of &quot;net positive&quot; and
+&quot;net negative&quot; sentiment using different sentiment dictionaries." />
 
 
 
@@ -110,57 +110,61 @@ sentiment using the AFINN, Liu et al. and NRC dictionaries." />
     </div>
 
     <div class="ref-description">
-    <p>For a given text, calculate indicators of "net positive" and "net negative"
-sentiment using the AFINN, Liu et al. and NRC dictionaries.</p>
+    <p>For a given text and class, calculate indicators of "net positive" and
+"net negative" sentiment using different sentiment dictionaries.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calc_net_sentiment_per_tag</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  <span class='va'>target_col_name</span>,
-  <span class='va'>text_col_name</span>,
-  grouping_variables <span class='op'>=</span> <span class='cn'>NULL</span>,
-  filter_main_group <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>calc_net_sentiment_per_tag</span><span class='op'>(</span><span class='va'>x</span>, target_col_name <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>text_col_name</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame with three columns: the column with the classes; the
-column with the text; and the column(s) with the group(s).</p></td>
+      <td><p>A data frame with two columns: the column with the classes; and the
+column with the text. Any other columns will be ignored.</p></td>
     </tr>
     <tr>
       <th>target_col_name</th>
-      <td><p>A string with the column name of the target variable.</p></td>
+      <td><p>A string with the column name of the target variable.
+Defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>text_col_name</th>
       <td><p>A string with the column name of the text variable.</p></td>
     </tr>
-    <tr>
-      <th>grouping_variables</th>
-      <td><p>A string or vector of strings with the column
-name(s) (if any) of the grouping variable(s). Defaults to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
-      <th>filter_main_group</th>
-      <td><p>A string with the name(s) of the organization(s)
-for which to create and count bigrams. Defaults to <code>NULL</code> (all
-organizations).</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
+    <p>A data frame with four or five columns: the column with the classes
+(if any); the net sentiment; the method (dictionary) used; the total
+negative sentiment; and the total positive sentiment. The last two
+columns are NA for AFINN (see Note).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>The dictionaries of Minging and Liu (2004) and Mohammad and Turney
+(2013; known as NRC) assign sentiment characterizations to words, e.g.
+"negative" or "positive". The "net" sentiment is therefore calculated as
+"sum of words with a positive sentiment minus sum of words with a
+negative sentiment". On the other hand, AFINN, the dictionary of Nielsen
+(2013), works with sentiment scores and so the net sentiment is their sum.
+See Silge and Robinson (2017).</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
+    <p>Hu M. &amp; Liu B. (2004). Mining and summarizing customer
+reviews. Proceedings of the ACM SIGKDD International Conference on
+Knowledge Discovery &amp; Data Mining (KDD-2004), Seattle, Washington, USA,
+Aug 22-25, 2004. <br /><br />
+Mohammad S.M. &amp; Turney P.D. (2013). Crowdsourcing a Word–Emotion
+Association Lexicon. Computational Intelligence, 29(3):436-465. <br /><br />
+Nielsen F.A. (2013). A new ANEW: Evaluation of a word list for
+sentiment analysis in microblogs. Proceedings of the ESWC2011 Workshop
+on 'Making Sense of Microposts': Big things come in small packages 718
+in CEUR Workshop Proceedings 93-98. https://arxiv.org/abs/1103.2903. <br /><br />
+Silge J. &amp; Robinson D. (2017). Text Mining with R: A Tidy Approach.
+Sebastopol, CA: O’Reilly Media. ISBN 978-1-491-98165-8.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

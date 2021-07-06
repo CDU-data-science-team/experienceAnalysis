@@ -118,7 +118,6 @@
   <span class='va'>x</span>,
   <span class='va'>target_col_name</span>,
   <span class='va'>target_pred_col_name</span>,
-  grouping_variables <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_names <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -127,10 +126,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame with two or more columns, of which two should be
-the following: the column with the actual classes; and the column with
-the predicted classes. If there are grouping variables, the rest of the
-columns should have the groups.</p></td>
+      <td><p>A data frame with two columns: the column with the actual classes;
+and the column with the predicted classes. Any other columns will be
+ignored.</p></td>
     </tr>
     <tr>
       <th>target_col_name</th>
@@ -142,11 +140,6 @@ columns should have the groups.</p></td>
 for the target variable.</p></td>
     </tr>
     <tr>
-      <th>grouping_variables</th>
-      <td><p>A string or vector of strings with the column
-name(s) (if any) of the grouping variable(s). Defaults to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
       <th>column_names</th>
       <td><p>A vector of strings or <code>NULL</code>, used to specify the
 names of the returned data frame/tibble. See Details.</p></td>
@@ -155,20 +148,20 @@ names of the returned data frame/tibble. See Details.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame/tibble with as many rows as the number of unique labels
-for each group (if any). See Details.</p>
+    <p>A data frame/tibble with as many rows as the number of unique labels.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function was originally designed for use with package
 <a href='https://github.com/CDU-data-science-team/pxtextminingdashboard'><code>{pxtextminingdashboard}</code></a>,
-in which case <code>column_names</code> is set to <code><a href='https://rdrr.io/r/base/c.html'>c("organization", "class", "accuracy")</a></code>. It can, however, be used outside the context of
-<code>{pxtextminingdashboard}</code>, by controlling the <code>column_names</code> argument:</p><ul>
+in which case <code>column_names</code> is set to <code><a href='https://rdrr.io/r/base/c.html'>c("class", "accuracy")</a></code>. It can,
+however, be used outside the context of<code>{pxtextminingdashboard}</code>, by
+controlling the <code>column_names</code> argument:</p><ul>
 <li><p>When <code>column_names</code> is <code>NULL</code>, then the returned data frame names
-are <code><a href='https://rdrr.io/r/base/c.html'>c(grouping_variables, target_col_name, "accuracy")</a></code>.</p></li>
+are <code><a href='https://rdrr.io/r/base/c.html'>c(target_col_name, "accuracy")</a></code>.</p></li>
 <li><p>When <code>column_names</code> is a vector of strings, the returned data
 frame names are as in the vector.</p></li>
-</ul><p>I NEED TO CLARIFY THIS: When there are more than one groups, the first one is
-considered to be the "main" one and is named "organization" by default.</p>
+</ul>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
