@@ -12,21 +12,21 @@ tidy_net_sentiment_nrc(
 }
 \arguments{
 \item{net_sentiment_wide_nrc}{A data frame/tibble derived from
-calc_net_sentiment_per_tag{experienceAnalysis}.}
+\code{\link{calc_net_sentiment_per_tag}}.}
 
 \item{sorting_sentiments}{A string of vector of strings with the NRC
 sentiments by which to sort the returned table. (To see all NRC
-sentiments run \code{prep_sentiments_nrc()}). Order matters:
+sentiments run \code{\link{prep_sentiments_nrc}}). Order matters:
 \code{c("anger", "fear")} will sort by "anger" first. Conversely,
 \code{c("fear", "anger")} will sort by "fear" first.}
 
-\item{num_of_lines}{The number of records to return, overall or for
-each group (if any).}
+\item{num_of_lines}{The number of records to return.}
 }
 \value{
-
+A data frame in long format with four columns: the text; the line
+number; the NRC sentiment; and the count of the NRC sentiment.
 }
 \description{
-Order result of \verb{calc_net_sentiment_per_tag\{experienceAnalysis\}} by the
+Order result of \code{\link{calc_net_sentiment_per_tag}} by the
 count of one or more NRC sentiments, and convert to "tidy" format.
 }

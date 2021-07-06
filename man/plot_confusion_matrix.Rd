@@ -8,7 +8,6 @@ plot_confusion_matrix(
   x,
   target_col_name,
   target_pred_col_name,
-  grouping_variables = NULL,
   type = "heatmap"
 )
 }

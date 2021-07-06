@@ -14,7 +14,7 @@ calc_predict_unlabelled_text(
   text_col_name,
   pipe_path,
   preds_column = NULL,
-  column_names = NULL
+  column_names = "all_cols"
 )
 }
 \arguments{
@@ -38,7 +38,7 @@ indicating which Python to use (e.g. from a virtual environment).}
 
 \item{text_col_name}{A string with the column name of the text variable.}
 
-\item{pipe_path}{A string in the form "path_to_fitted_pipeline/pipeline.sav,"
+\item{pipe_path}{A string in the form "path_to_fitted_pipeline/pipeline.sav",
 where "pipeline" is the name of the SAV file with the fitted
 \code{Scikit-learn} pipeline.}
 
@@ -47,13 +47,13 @@ will have the predictions. If \code{NULL} (default), then the name will be
 \code{paste0(text_col_name, "_preds")}.}
 
 \item{column_names}{A vector of strings with the names of the columns of the
-supplied data frame (incl. \code{text_col_name}) to be added to the returned data
-frame. If \code{NULL}, then the only column in the returned data frame will be
-\code{preds_column.} Defaults to "\strong{all}".}
+supplied data frame (incl. \code{text_col_name}) to be added to the returned
+data frame. If "preds_only", then the only column in the returned data
+frame will be \code{preds_column}. Defaults to "all_cols".}
 }
 \value{
 
 }
 \description{
-For internal use only!
+Predict unlabelled text using a fitted Scikit-learn pipeline
 }

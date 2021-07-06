@@ -1,30 +1,54 @@
-#' Calculate TextBlob sentiment indicators
+#' Calculate text sentiment indicators using Python packages
 #'
-#' @param x
-#' @param sys_setenv
-#' @param which_python
-#' @param which_venv
-#' @param venv_name
-#' @param make_table
+#' Uses Python's `TextBlob` and `vaderSentiment` packages to calculate several
+#' indicators of sentiment in a text.
 #'
-#' @return
+#' @param python_setup A `logical` whether to set up the `Python` version,
+#'     virtual environment etc. that can be controlled with arguments
+#'     `sys_setenv`, `which_python`, `which_venv` and `venv_name`. These
+#'     arguments will be ignored when `python_setup` is `FALSE`. The purpose of
+#'     `python_setup` is that users may wish to control the `Python` parameters
+#'     outside the actual function, for the session in general.
+#' @param x A data frame with a column that has the text. Any other columns will
+#'     be ignored.
+#' @param sys_setenv A string with the path to the Python version to use in this
+#'     session.
+#' @param which_python A string with the path to the Python version to use in
+#'     this session.
+#' @param which_venv A string that should be "conda", "miniconda" or "python".
+#'     See `use_python{reticulate}`.
+#' @param venv_name A string with the name of the Python virtual environment to
+#'     use in this session.
+#' @param text_col_name A string with the column name of the text variable.
+#'
+#' @details `TextBlob` calculates two indicators:
+#'     \itemize{
+#'         \item{_Polarity_, which ranges from -1 (most negative)
+#'             to 1 (most positive). Neutral text gets polarity of 0 or near it;}
+#'         \item{_Subjectivity_, which ranges from 0 (not subjective) to 1 (very
+#'              subjective);}
+#'      }
+#'    `vaderSentiment` calculates four indicators:
+#'    \itemize{
+#'        \item{_Compound_ is like `TextBlob`'s _polarity_;}
+#'        \item{Indicators of the proportion of positivity, negativity and
+#'            neutrality in the text. The three indicators sum to 1;}
+#'    }
+#'    This function is an implementation of Python function `sentiment_scores`
+#'    in package [`pxtextmining`](https://github.com/CDU-data-science-team/pxtextmining/tree/main).
+#'
+#' @return A data frame with the five indicators described in Details.
 #' @export
 #'
 #' @examples
 
-calc_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
-                                     venv_name, make_table = TRUE,
-                                     text_col_name) {
+calc_sentiment_indicators <- function(x, python_setup = TRUE, sys_setenv,
+                                      which_python, which_venv,
+                                      venv_name, text_col_name) {
 
-  Sys.setenv(RETICULATE_PYTHON = sys_setenv)
-  reticulate::use_python(which_python)
-
-  if (which_venv == 'conda') {
-    reticulate::use_condaenv(venv_name, required = TRUE)
-  } else if (which_venv == 'miniconda') {
-    reticulate::use_miniconda(venv_name, required = TRUE)
-  } else if (which_venv == 'python') {
-    reticulate::use_virtualenv(venv_name, required = TRUE)
+  if (python_setup) {
+    experienceAnalysis::prep_python(sys_setenv, which_python, which_venv,
+                                    venv_name, text_col_name)
   }
 
   sentiment_scores <- reticulate::py_run_string(
@@ -33,28 +57,7 @@ calc_sentiment_indicators <- function(x, sys_setenv, which_python, which_venv,
 
   sentiments_table <- x %>%
     dplyr::select(dplyr::all_of(text_col_name)) %>%
-    sentiment_scores$sentiment_scores() %>%
-    dplyr::select(text_blob_polarity) %>%
-    dplyr::rename(polarity = text_blob_polarity) %>%
-    dplyr::mutate(row_index = x$row_index)
-
-  if (make_table) {
-
-    sentiments_table <- sentiments_table %>%
-      dplyr::left_join(x) %>%
-      dplyr::filter(
-        dplyr::across(dplyr::any_of("super"), ~ . != "Couldn't be improved")
-      ) %>%
-      dplyr::select({{text_col_name}}, polarity, organization, label,
-                    criticality) %>%
-      dplyr::mutate(
-        polarity = round(polarity, 2),
-        criticality = dplyr::case_when(
-          !criticality %in% -5:5 ~ "Unassigned",
-          TRUE ~ criticality
-        )
-      )
-  }
+    sentiment_scores$sentiment_scores()
 
   return(sentiments_table)
 }

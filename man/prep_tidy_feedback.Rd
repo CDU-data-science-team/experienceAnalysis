@@ -2,30 +2,24 @@
 % Please edit documentation in R/prep_tidy_feedback.R
 \name{prep_tidy_feedback}
 \alias{prep_tidy_feedback}
-\title{Unnest tokens for each label in a labeled text}
+\title{Unnest tokens for each label in a labelled text}
 \usage{
-prep_tidy_feedback(
-  x,
-  target_col_name,
-  text_col_name,
-  grouping_variables = NULL
-)
+prep_tidy_feedback(x, target_col_name = NULL, text_col_name)
 }
 \arguments{
-\item{x}{A data frame with three columns: the column with the classes; the
-column with the text; and the column(s) with the group(s).}
+\item{x}{x A data frame with one or more columns: the column with the classes
+(if \code{target_col_name} is not \code{NULL}); and the column with the text. Any
+other columns will be ignored.}
 
-\item{target_col_name}{A string with the column name of the target variable.}
+\item{target_col_name}{A string with the column name of the target variable.
+Defaults to \code{NULL}.}
 
 \item{text_col_name}{A string with the column name of the text variable.}
-
-\item{grouping_variables}{A string or vector of strings with the column
-name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
 }
 \value{
-
+A data frame with two or three columns: classes (if \code{target_col_name}
+is not \code{NULL}); line numbers; and tokens.
 }
 \description{
-Creates table with tokens and other columns (e.g. labels, groups)
-passed by the user.
+Creates table with tokens for each class (if any).
 }
