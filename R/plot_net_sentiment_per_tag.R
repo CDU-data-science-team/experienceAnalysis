@@ -14,7 +14,7 @@ plot_net_sentiment_per_tag <- function(net_sentiment_all_dicts, target_col_name)
     ggplot2::ggplot(
       ggplot2::aes(
         sentiment,
-        reorder(net_sentiment_all_dicts[[target_col_name]], sentiment) # Don't know how to do it with non-standard evaluation.
+        reorder(.data[[target_col_name]], sentiment) # Don't know how to do it with non-standard evaluation.
       )
     ) +
     ggplot2::geom_col(fill = 'blue', alpha = 0.6) +
