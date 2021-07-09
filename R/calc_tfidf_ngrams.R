@@ -90,7 +90,8 @@ calc_tfidf_ngrams <- function(x, target_col_name, text_col_name,
     dplyr::filter(
       dplyr::across(
         dplyr::all_of(target_col_name),
-        ~ . %in% filter_class
+        ~ experienceAnalysis::tidy_filter_null(., filter_class,
+                                               filter_how = "in")
       )
     ) %>%
     dplyr::slice(1:number_of_ngrams)
