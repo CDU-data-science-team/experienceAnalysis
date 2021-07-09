@@ -48,7 +48,7 @@ calc_sentiment_indicators <- function(x, python_setup = TRUE, sys_setenv,
 
   if (python_setup) {
     experienceAnalysis::prep_python(sys_setenv, which_python, which_venv,
-                                    venv_name, text_col_name)
+                                    venv_name)
   }
 
   sentiment_scores <- reticulate::py_run_string(

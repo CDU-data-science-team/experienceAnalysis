@@ -37,7 +37,7 @@ calc_predict_unlabelled_text <- function(x, python_setup = TRUE, sys_setenv,
 
   if (python_setup) {
     experienceAnalysis::prep_python(sys_setenv, which_python, which_venv,
-                                    venv_name, text_col_name)
+                                    venv_name)
   }
 
   # The behaviour of {reticulate} is not clear. If the user passes "all_cols" or
