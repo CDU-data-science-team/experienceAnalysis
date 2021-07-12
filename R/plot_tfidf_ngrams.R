@@ -26,15 +26,12 @@
 #'   plot_tfidf_ngrams(title = "Bigrams with highest TF-IDFs in Emma")
 
 
-plot_tfidf_ngrams <- function(tfidf_ngrams, ngrams_type, filter_class) {
+plot_tfidf_ngrams <- function(tfidf_ngrams, title = NULL) {
 
   p <- tfidf_ngrams %>%
     ggplot2::ggplot(ggplot2::aes(tf_idf, reorder(ngram, tf_idf))) +
     ggplot2::geom_col(fill = 'blue', alpha = 0.6) +
-    ggplot2::labs(x = "TF-IDF*", y = NULL,
-                  title = paste0("Most frequent ", ngrams_type,
-                                 " in feedback text that is about\n",
-                                 "\"", filter_class, "\"")) +
+    ggplot2::labs(x = "TF-IDF", y = NULL, title = title) +
     ggplot2::theme_bw() +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_blank(),
