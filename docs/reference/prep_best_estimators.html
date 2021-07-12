@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Prepare table with the best (hyper)parameter tunings for each learner — prep_best_estimators" />
-<meta property="og:description" content="Internal function" />
+<meta property="og:description" content="For internal use only! Get the best-scoring (hyper)parameters for each
+learner based on Class Balance Accuracy." />
 
 
 
@@ -72,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">experienceAnalysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -109,7 +110,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Internal function</p>
+    <p>For internal use only! Get the best-scoring (hyper)parameters for each
+learner based on Class Balance Accuracy.</p>
     </div>
 
     <pre class="usage"><span class='fu'>prep_best_estimators</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
@@ -119,15 +121,17 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td></td>
+      <td><p>A "tuning_results" data frame. See
+<code><a href='prep_all_pipeline_tuning_results.html'>prep_all_pipeline_tuning_results</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
+    <p>A data frame.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-
+    <p>See <code><a href='prep_all_pipeline_tuning_results.html'>prep_all_pipeline_tuning_results</a></code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

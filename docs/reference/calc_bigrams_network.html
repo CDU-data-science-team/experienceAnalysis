@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Create and count bigrams — calc_bigrams_network" />
 <meta property="og:description" content="For a given labelled text, create and calculate the most frequently occurring
-bigrams for the given class(es)." />
+bigrams (no stop words) for the given class(es)." />
 
 
 
@@ -73,7 +73,7 @@ bigrams for the given class(es)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">experienceAnalysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@ bigrams for the given class(es)." />
 
     <div class="ref-description">
     <p>For a given labelled text, create and calculate the most frequently occurring
-bigrams for the given class(es).</p>
+bigrams (no stop words) for the given class(es).</p>
     </div>
 
     <pre class="usage"><span class='fu'>calc_bigrams_network</span><span class='op'>(</span>
@@ -161,7 +161,8 @@ second word of bigram; and bigram count.</p>
 
     <p>When supplying more than one class in <code>filter_class</code>, the returned data
 frame will NOT separate the results for the different classes. If
-separation is desired, then do something like this:</p><pre><span class='co'># Assuming that the class and text text columns are called "label" and</span>
+separation is desired, then run the function for each class separately or
+do something like this:</p><pre><span class='co'># Assuming that the class and text columns are called "label" and</span>
 <span class='co'># "feedback" respectively</span>
 <span class='va'>x</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>$</span><span class='va'>label</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -173,6 +174,97 @@ separation is desired, then do something like this:</p><pre><span class='co'># A
 </pre>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>experienceAnalysis</span><span class='op'>)</span>
+<span class='va'>books</span> <span class='op'>&lt;-</span> <span class='fu'>janeaustenr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/janeaustenr/man/austen_books.html'>austen_books</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># Jane Austen books</span>
+<span class='va'>emma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>books</span><span class='op'>[</span><span class='va'>books</span><span class='op'>$</span><span class='va'>book</span> <span class='op'>==</span> <span class='st'>"Emma"</span>, <span class='op'>]</span>, collapse <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span> <span class='co'># String with whole book</span>
+<span class='va'>pp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>books</span><span class='op'>[</span><span class='va'>books</span><span class='op'>$</span><span class='va'>book</span> <span class='op'>==</span> <span class='st'>"Pride &amp; Prejudice"</span>, <span class='op'>]</span>, collapse <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span> <span class='co'># String with whole book</span>
+
+<span class='co'># Make data frame with books Emma and Pride &amp; Prejudice</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>emma</span>, <span class='va'>pp</span><span class='op'>)</span>,
+  book <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Emma"</span>, <span class='st'>"Pride &amp; Prejudice"</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># Bigrams for both books</span>
+<span class='fu'>calc_bigrams_network</span><span class='op'>(</span><span class='va'>x</span>, target_col_name <span class='op'>=</span> <span class='st'>"book"</span>, text_col_name <span class='op'>=</span> <span class='st'>"text"</span>,
+                     filter_class <span class='op'>=</span> <span class='cn'>NULL</span>, bigrams_prop <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       word1       word2     n
+#&gt; 1         4           4 16234
+#&gt; 2         2           2 13029
+#&gt; 3      miss   woodhouse   162
+#&gt; 4     frank   churchill   132
+#&gt; 5      miss     fairfax   109
+#&gt; 6      miss       bates   103
+#&gt; 7      lady   catherine   100
+#&gt; 8      jane     fairfax    96
+#&gt; 9      miss     bingley    72
+#&gt; 10     miss      bennet    60
+#&gt; 11     john   knightley    56
+#&gt; 12     miss       smith    51
+#&gt; 13     miss      taylor    40
+#&gt; 14      sir     william    38
+#&gt; 15       de      bourgh    35
+#&gt; 16     miss       darcy    34
+#&gt; 17     dear        emma    31
+#&gt; 18     dear        miss    31
+#&gt; 19    maple       grove    31
+#&gt; 20    cried        emma    27
+#&gt; 21  harriet       smith    27
+#&gt; 22   robert      martin    27
+#&gt; 23  colonel     forster    26
+#&gt; 24  colonel fitzwilliam    25
+#&gt; 25    cried   elizabeth    24
+#&gt; 26     dear         sir    23
+#&gt; 27     miss       lucas    23
+#&gt; 28 thousand      pounds    23
+#&gt; 29     dear        jane    22
+#&gt; 30  colonel    campbell    21
+#&gt; 31     miss          de    20
+#&gt; 32    frank churchill's    19
+#&gt; 33      box        hill    18
+#&gt; 34     lady       lucas    18
+#&gt; 35  replied   elizabeth    18</div><div class='input'>
+<span class='co'># Bigrams for Emma</span>
+<span class='fu'>calc_bigrams_network</span><span class='op'>(</span><span class='va'>x</span>, target_col_name <span class='op'>=</span> <span class='st'>"book"</span>, text_col_name <span class='op'>=</span> <span class='st'>"text"</span>,
+                     filter_class <span class='op'>=</span> <span class='st'>"Emma"</span>, bigrams_prop <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      word1       word2     n
+#&gt; 1        4           4 16234
+#&gt; 2     miss   woodhouse   162
+#&gt; 3    frank   churchill   132
+#&gt; 4     miss     fairfax   109
+#&gt; 5     miss       bates   103
+#&gt; 6     jane     fairfax    96
+#&gt; 7     john   knightley    56
+#&gt; 8     miss       smith    51
+#&gt; 9     miss      taylor    40
+#&gt; 10    dear        emma    31
+#&gt; 11   maple       grove    31
+#&gt; 12   cried        emma    27
+#&gt; 13 harriet       smith    27
+#&gt; 14  robert      martin    27
+#&gt; 15    dear        miss    25
+#&gt; 16 colonel    campbell    21
+#&gt; 17   frank churchill's    19</div><div class='input'>
+<span class='co'># Bigrams for Pride &amp; Prejudice</span>
+<span class='fu'>calc_bigrams_network</span><span class='op'>(</span><span class='va'>x</span>, target_col_name <span class='op'>=</span> <span class='st'>"book"</span>, text_col_name <span class='op'>=</span> <span class='st'>"text"</span>,
+                     filter_class <span class='op'>=</span> <span class='st'>"Pride &amp; Prejudice"</span>, bigrams_prop <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       word1       word2     n
+#&gt; 1         2           2 13029
+#&gt; 2      lady   catherine   100
+#&gt; 3      miss     bingley    72
+#&gt; 4      miss      bennet    60
+#&gt; 5       sir     william    38
+#&gt; 6        de      bourgh    35
+#&gt; 7      miss       darcy    34
+#&gt; 8   colonel     forster    26
+#&gt; 9   colonel fitzwilliam    25
+#&gt; 10    cried   elizabeth    24
+#&gt; 11     miss       lucas    23
+#&gt; 12     miss          de    20
+#&gt; 13 thousand      pounds    20
+#&gt; 14     lady       lucas    18
+#&gt; 15  replied   elizabeth    18</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

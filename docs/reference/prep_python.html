@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Title — prep_python • experienceAnalysis</title>
+<title>Set up a Python virtual environment — prep_python • experienceAnalysis</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Title — prep_python" />
-<meta property="og:description" content="Title" />
+<meta property="og:title" content="Set up a Python virtual environment — prep_python" />
+<meta property="og:description" content="Set up a Python virtual environment to run R functions that use reticulate
+to run Python in the background." />
 
 
 
@@ -72,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">experienceAnalysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -103,31 +104,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Title</h1>
+    <h1>Set up a Python virtual environment</h1>
     
     <div class="hidden name"><code>prep_python.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Title</p>
+    <p>Set up a Python virtual environment to run R functions that use <code>reticulate</code>
+to run Python in the background.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prep_python</span><span class='op'>(</span><span class='va'>sys_setenv</span>, <span class='va'>which_python</span>, <span class='va'>which_venv</span>, <span class='va'>venv_name</span>, <span class='va'>text_col_name</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>prep_python</span><span class='op'>(</span><span class='va'>sys_setenv</span>, <span class='va'>which_python</span>, <span class='va'>which_venv</span>, <span class='va'>venv_name</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>text_col_name</th>
-      <td></td>
+      <th>sys_setenv</th>
+      <td><p>A string in the form "path_to_python/python.exe",
+indicating which Python to use (e.g. from a virtual environment).</p></td>
+    </tr>
+    <tr>
+      <th>which_python</th>
+      <td><p>Same as <code>sys_setenv</code>.</p></td>
+    </tr>
+    <tr>
+      <th>which_venv</th>
+      <td><p>A string that can be "conda", "miniconda" or "python".</p></td>
+    </tr>
+    <tr>
+      <th>venv_name</th>
+      <td><p>String. The name of the virtual environment.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>Nothing- it just sets up the Python virtual environment invisibly.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
