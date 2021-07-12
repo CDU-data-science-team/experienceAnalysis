@@ -65,7 +65,8 @@ calc_bigrams_network <- function(x, target_col_name, text_col_name,
     dplyr::filter(
       dplyr::across(
         dplyr::all_of(target_col_name),
-        ~ experienceAnalysis::tidy_class_filter(., filter_class)
+        ~ experienceAnalysis::tidy_filter_null(., filter_class,
+                                               filter_how = "in")
       )
     ) %>%
     tidytext::unnest_tokens(
