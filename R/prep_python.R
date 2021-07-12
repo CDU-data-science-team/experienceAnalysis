@@ -1,11 +1,15 @@
-#' Title
+#' Set up a Python virtual environment
 #'
-#' @param sys_setenv
-#' @param which_python
-#' @param which_venv
-#' @param venv_name
+#' Set up a Python virtual environment to run R functions that use `reticulate`
+#' to run Python in the background.
 #'
-#' @return
+#' @param sys_setenv A string in the form "path_to_python/python.exe",
+#'     indicating which Python to use (e.g. from a virtual environment).
+#' @param which_python Same as `sys_setenv`.
+#' @param which_venv A string that can be "conda", "miniconda" or "python".
+#' @param venv_name String. The name of the virtual environment.
+#'
+#' @return Nothing- it just sets up the Python virtual environment invisibly.
 #' @export
 #'
 #' @examples

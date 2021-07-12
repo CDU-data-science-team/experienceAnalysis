@@ -23,6 +23,25 @@
 #' @export
 #'
 #' @examples
+#' library(experienceAnalysis)
+#' books <- janeaustenr::austen_books() # Jane Austen books
+#' emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+#' pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+#'
+#' # Make data frame with books Emma and Pride & Prejudice
+#' x <- data.frame(
+#'   text = c(emma, pp),
+#'   book = c("Emma", "Pride & Prejudice")
+#' )
+#'
+#' # Net sentiment in each book for each dictionary, sorted in descending order
+#' calc_net_sentiment_per_tag(x, target_col_name = "book",
+#'                            text_col_name = "text")
+#'
+#' # Net sentiment in each book for each dictionary, by dictionary and book name
+#' calc_net_sentiment_per_tag(x, target_col_name = "book",
+#'                            text_col_name = "text") %>%
+#'     dplyr::arrange(method, book)
 #' @references Hu M. & Liu B. (2004). Mining and summarizing customer
 #'     reviews. Proceedings of the ACM SIGKDD International Conference on
 #'     Knowledge Discovery & Data Mining (KDD-2004), Seattle, Washington, USA,

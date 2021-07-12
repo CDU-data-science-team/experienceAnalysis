@@ -1,4 +1,4 @@
-#' Predict unlabelled text using a fitted Scikit-learn pipeline
+#' Predict unlabelled text using a fitted `Scikit-learn` (Python) pipeline
 #'
 #' @param x A data frame with the text data to predict classes for.
 #' @param python_setup A `logical` whether to set up the `Python` version,

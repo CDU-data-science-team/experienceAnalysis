@@ -1,14 +1,32 @@
-#' Title
+#' Plot a confusion matrix
 #'
-#' @param x
-#' @param target_col_name
-#' @param target_pred_col_name
-#' @param type
+#' @param x A data frame with two columns: the column with the actual classes;
+#'     and the column with the predicted classes. Any other columns will be
+#'     ignored.
+#' @param target_col_name A string with the column name of the target variable.
+#' @param target_pred_col_name A string with the column name of the predictions
+#'     for the target variable.
+#' @param type A string indicating the of plot: "mosaic" or "heatmap".
+#'     Defaults to- and currntly can only be- "heatmap".
 #'
-#' @return
+#' @details This function differs from `ggplot2::autoplot` because the gradient
+#'     fills the heatmap (confusion matrix) based on absolute counts. It does
+#'     not make sense to compare colours between different "Truth" columns. By
+#'     contrast `plot_confusion_matrix` expresses column counts as proportions
+#'     of the total count in that column. The proportions are used to define a
+#'     colour scale. The _actual_ counts are plotted though.
+#'
+#' @return A `ggplot` (`ggplot::geom_tile`).
 #' @export
 #'
 #' @examples
+#' library(experienceAnalysis)
+#' mtcars %>%
+#'   dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) %>%  # Mock predictions column
+#'   plot_confusion_matrix(
+#'     target_col_name = "carb",
+#'     target_pred_col_name = "carb_pred"
+#'   )
 
 plot_confusion_matrix <- function(x, target_col_name, target_pred_col_name,
                                   type = "heatmap") {
@@ -16,12 +34,6 @@ plot_confusion_matrix <- function(x, target_col_name, target_pred_col_name,
   cm <- experienceAnalysis::calc_confusion_matrix(x, target_col_name,
                                                   target_pred_col_name)
 
-  # Not using ggplot2::autoplot(cm) because the gradient fills the heatmap
-  # (confusion matrix) based on absolute counts. It does not make sense to
-  # compare colours between different "Truth" columns. Below is a custom
-  # alternative that expresses column counts as proportions of the total count
-  # in that column. The proportions are used to define a colour scale. The
-  # actual counts are plotted though.
   data_heatmap <- cm$table %>%
     as.data.frame() %>%
     dplyr::group_by(Truth) %>%

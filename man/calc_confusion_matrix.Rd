@@ -26,3 +26,20 @@ Calculates the confusion matrix of observed and predicted classes, after
 converting them into factors first (not currently done by
 \verb{conf_mat\{yardstick\}}).
 }
+\examples{
+library(experienceAnalysis)
+mtcars \%>\%
+  dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) \%>\%  # Mock predictions column
+  calc_accuracy_per_class(
+    target_col_name = "carb",
+    target_pred_col_name = "carb_pred"
+  )
+
+# Custom column names
+mtcars \%>\%
+  dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) \%>\%  # Mock predictions column
+  calc_confusion_matrix(
+    target_col_name = "carb",
+    target_pred_col_name = "carb_pred"
+  )
+}

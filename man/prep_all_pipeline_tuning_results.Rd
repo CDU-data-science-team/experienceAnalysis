@@ -7,11 +7,12 @@
 prep_all_pipeline_tuning_results(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{A "tuning_results" data frame.}
 }
 \value{
-
+A data frame.
 }
 \description{
-Internal function
+For internal use only! Tidy up a "tuning_results" table from
+\href{https://github.com/CDU-data-science-team/pxtextmining}{\code{pxtextmining}}.
 }

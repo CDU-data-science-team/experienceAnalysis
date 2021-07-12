@@ -12,20 +12,6 @@
 #'     class(es) for which bigrams are to be created and counted. Defaults to
 #'     `NULL` (all rows).
 #'
-#' @note When supplying more than one class in `filter_class`, the returned data
-#'     frame will NOT separate the results for the different classes. If
-#'     separation is desired, then do something like this:
-#'
-#'     # Assuming that the class and text text columns are called "label" and
-#'     # "feedback" respectively
-#'     x %>%
-#'         split(.$label) %>%
-#'         purrr::map(
-#'             ~ calc_net_sentiment_nrc(., target_col_name = NULL,
-#'                                    text_col_name = "feedback",
-#'                                    filter_class = NULL)
-#'         )
-#'
 #' @return A data frame with 12 or 13 columns: the text column; the line number;
 #'     the 10 NRC sentiments (anger, anticipation disgust, fear, joy, negative,
 #'     positive, sadness, surprise, trust- see Mohammad & Turney, 2013); and the
@@ -33,6 +19,20 @@
 #' @export
 #'
 #' @examples
+#' library(experienceAnalysis)
+#' books <- janeaustenr::austen_books() # Jane Austen books
+#' emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+#' pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+#'
+#' # Make data frame with books Emma and Pride & Prejudice
+#' x <- data.frame(
+#'   text = c(emma, pp),
+#'   book = c("Emma", "Pride & Prejudice")
+#' )
+#'
+#' # Net sentiment in each book
+#' calc_net_sentiment_nrc(x, target_col_name = "book", text_col_name = "text",
+#'                        filter_class = NULL)
 #' @references Mohammad S.M. & Turney P.D. (2013). Crowdsourcing a
 #'     Word–Emotion Association Lexicon. Computational Intelligence,
 #'     29(3):436-465.

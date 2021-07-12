@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_predict_unlabelled_text.R
 \name{calc_predict_unlabelled_text}
 \alias{calc_predict_unlabelled_text}
-\title{Predict unlabelled text using a fitted Scikit-learn pipeline}
+\title{Predict unlabelled text using a fitted \code{Scikit-learn} (Python) pipeline}
 \usage{
 calc_predict_unlabelled_text(
   x,
@@ -55,5 +55,5 @@ frame will be \code{preds_column}. Defaults to "all_cols".}
 
 }
 \description{
-Predict unlabelled text using a fitted Scikit-learn pipeline
+Predict unlabelled text using a fitted \code{Scikit-learn} (Python) pipeline
 }

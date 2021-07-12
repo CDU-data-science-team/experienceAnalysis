@@ -36,7 +36,8 @@ in a given text.
 \note{
 When supplying more than one class in \code{filter_class}, the returned data
 frame will NOT separate the results for the different classes. If
-separation is desired, then do something like this:\preformatted{# Assuming that the class and text text columns are called "label" and
+separation is desired, then run the function for each class separately or
+do something like this:\preformatted{# Assuming that the class and text columns are called "label" and
 # "feedback" respectively
 x \%>\%
     split(.$label) \%>\%
@@ -46,6 +47,34 @@ x \%>\%
                                filter_class = NULL)
     )
 }
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Word counts for both books
+calc_bing_word_counts(x, target_col_name = "book", text_col_name = "text",
+                      filter_class = NULL) \%>\%
+  head()
+
+# Word counts for Emma
+calc_bing_word_counts(x, target_col_name = "book", text_col_name = "text",
+                      filter_class = "Emma") \%>\%
+  head()
+
+# Word counts for Pride & Prejudice
+calc_bing_word_counts(x, target_col_name = "book", text_col_name = "text",
+                      filter_class = "Pride & Prejudice") \%>\%
+  head()
+
 }
 \references{
 Hu M. & Liu B. (2004). Mining and summarizing customer

@@ -1,7 +1,6 @@
 #' Calculate classifier accuracy for each class and group
 #'
-#' Calculates the accuracy of a predictive model for each class and group
-#' (if any).
+#' Calculates the accuracy of a predictive model for each class.
 #'
 #' @param x A data frame with two columns: the column with the actual classes;
 #'     and the column with the predicted classes. Any other columns will be
@@ -28,6 +27,22 @@
 #' @export
 #'
 #' @examples
+#' library(experienceAnalysis)
+#' mtcars %>%
+#'   dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) %>%  # Mock predictions column
+#'   calc_accuracy_per_class(
+#'     target_col_name = "carb",
+#'     target_pred_col_name = "carb_pred"
+#'   )
+#'
+#' # Custom column names
+#' mtcars %>%
+#'   dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) %>%  # Mock predictions column
+#'   calc_accuracy_per_class(
+#'     target_col_name = "carb",
+#'     target_pred_col_name = "carb_pred",
+#'     column_names = c("class", "accuracy_per_class")
+#'   )
 
 calc_accuracy_per_class <- function(x, target_col_name, target_pred_col_name,
                                     column_names = NULL)

@@ -42,13 +42,33 @@ largest TF-IDFs for the given class(es).
 \note{
 Unlike other functions in \code{experienceAnalysis} (e.g.
 \code{\link{calc_net_sentiment_nrc}}), here it does not make
-sense to have \code{target_col_name} set to \code{NULL}- the TF-IDF of an n-gram is
-a function of the number of "documents" containing it (see Silge and
+sense to have \code{target_col_name} set to \code{NULL}- the TF-IDF of an n-gram
+depends on the number of "documents" containing it (see Silge and
 Robinson, 2017), so there must be at least two classes (or "documents")
 to use in the calculations. \cr\cr
 When \code{filter_class} is not \code{NULL}, the TF-IDFs will \emph{still} be
 calculated using \emph{all} classes/documents and \emph{then} filtered by
 \code{filter_class}.
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Get a few of the bigram counts, TFs, IDFs and highest TF-IDFs for each book
+calc_tfidf_ngrams(x, target_col_name = "book", text_col_name = "text",
+                  filter_class = NULL,
+                  ngrams_type = "Bigrams",
+                  number_of_ngrams = 30
+) \%>\%
+split(.$book)
 }
 \references{
 Silge J. & Robinson D. (2017). Text Mining with R: A Tidy

@@ -28,8 +28,7 @@ names of the returned data frame/tibble. See Details.}
 A data frame/tibble with as many rows as the number of unique labels.
 }
 \description{
-Calculates the accuracy of a predictive model for each class and group
-(if any).
+Calculates the accuracy of a predictive model for each class.
 }
 \details{
 This function was originally designed for use with package
@@ -43,4 +42,22 @@ are \code{c(target_col_name, "accuracy")}.}
 \item{When \code{column_names} is a vector of strings, the returned data
 frame names are as in the vector.}
 }
+}
+\examples{
+library(experienceAnalysis)
+mtcars \%>\%
+  dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) \%>\%  # Mock predictions column
+  calc_accuracy_per_class(
+    target_col_name = "carb",
+    target_pred_col_name = "carb_pred"
+  )
+
+# Custom column names
+mtcars \%>\%
+  dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) \%>\%  # Mock predictions column
+  calc_accuracy_per_class(
+    target_col_name = "carb",
+    target_pred_col_name = "carb_pred",
+    column_names = c("class", "accuracy_per_class")
+  )
 }

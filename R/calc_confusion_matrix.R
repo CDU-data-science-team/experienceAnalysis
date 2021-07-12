@@ -16,6 +16,21 @@
 #' @export
 #'
 #' @examples
+#' library(experienceAnalysis)
+#' mtcars %>%
+#'   dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) %>%  # Mock predictions column
+#'   calc_accuracy_per_class(
+#'     target_col_name = "carb",
+#'     target_pred_col_name = "carb_pred"
+#'   )
+#'
+#' # Custom column names
+#' mtcars %>%
+#'   dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) %>%  # Mock predictions column
+#'   calc_confusion_matrix(
+#'     target_col_name = "carb",
+#'     target_pred_col_name = "carb_pred"
+#'   )
 
 calc_confusion_matrix <- function(x, target_col_name, target_pred_col_name,
                                   ...) {

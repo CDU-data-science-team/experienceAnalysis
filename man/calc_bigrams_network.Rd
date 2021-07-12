@@ -35,12 +35,13 @@ second word of bigram; and bigram count.
 }
 \description{
 For a given labelled text, create and calculate the most frequently occurring
-bigrams for the given class(es).
+bigrams (no stop words) for the given class(es).
 }
 \note{
 When supplying more than one class in \code{filter_class}, the returned data
 frame will NOT separate the results for the different classes. If
-separation is desired, then do something like this:\preformatted{# Assuming that the class and text text columns are called "label" and
+separation is desired, then run the function for each class separately or
+do something like this:\preformatted{# Assuming that the class and text columns are called "label" and
 # "feedback" respectively
 x \%>\%
     split(.$label) \%>\%
@@ -50,4 +51,28 @@ x \%>\%
                                filter_class = NULL, bigrams_prop = 50)
     )
 }
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Bigrams for both books
+calc_bigrams_network(x, target_col_name = "book", text_col_name = "text",
+                     filter_class = NULL, bigrams_prop = 3)
+
+# Bigrams for Emma
+calc_bigrams_network(x, target_col_name = "book", text_col_name = "text",
+                     filter_class = "Emma", bigrams_prop = 3)
+
+# Bigrams for Pride & Prejudice
+calc_bigrams_network(x, target_col_name = "book", text_col_name = "text",
+                     filter_class = "Pride & Prejudice", bigrams_prop = 3)
 }

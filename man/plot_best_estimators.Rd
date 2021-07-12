@@ -2,16 +2,16 @@
 % Please edit documentation in R/plot_best_estimators.R
 \name{plot_best_estimators}
 \alias{plot_best_estimators}
-\title{Title}
+\title{Plot the best \code{Scikit-learn} (Python) estimators}
 \usage{
 plot_best_estimators(best_estimators)
 }
 \arguments{
-\item{best_estimators}{}
+\item{best_estimators}{The result of \code{\link{prep_best_estimators}}.}
 }
 \value{
-
+A \code{ggplot2::geom_col}.
 }
 \description{
-Title
+For internal use only!
 }

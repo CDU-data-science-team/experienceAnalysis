@@ -2,18 +2,26 @@
 % Please edit documentation in R/prep_python.R
 \name{prep_python}
 \alias{prep_python}
-\title{Title}
+\title{Set up a Python virtual environment}
 \usage{
-prep_python(sys_setenv, which_python, which_venv, venv_name, text_col_name)
+prep_python(sys_setenv, which_python, which_venv, venv_name)
 }
 \arguments{
-\item{text_col_name}{}
+\item{sys_setenv}{A string in the form "path_to_python/python.exe",
+indicating which Python to use (e.g. from a virtual environment).}
+
+\item{which_python}{Same as \code{sys_setenv}.}
+
+\item{which_venv}{A string that can be "conda", "miniconda" or "python".}
+
+\item{venv_name}{String. The name of the virtual environment.}
 }
 \value{
-
+Nothing- it just sets up the Python virtual environment invisibly.
 }
 \description{
-Title
+Set up a Python virtual environment to run R functions that use \code{reticulate}
+to run Python in the background.
 }
 \examples{
 

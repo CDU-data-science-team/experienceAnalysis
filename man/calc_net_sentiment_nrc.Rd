@@ -34,19 +34,21 @@ column with the classes (if any).
 For a given text, translate all words into NRC sentiments and count sentiment
 occurrences.
 }
-\note{
-When supplying more than one class in \code{filter_class}, the returned data
-frame will NOT separate the results for the different classes. If
-separation is desired, then do something like this:\preformatted{# Assuming that the class and text text columns are called "label" and
-# "feedback" respectively
-x \%>\%
-    split(.$label) \%>\%
-    purrr::map(
-        ~ calc_net_sentiment_nrc(., target_col_name = NULL,
-                               text_col_name = "feedback",
-                               filter_class = NULL)
-    )
-}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Net sentiment in each book
+calc_net_sentiment_nrc(x, target_col_name = "book", text_col_name = "text",
+                       filter_class = NULL)
 }
 \references{
 Mohammad S.M. & Turney P.D. (2013). Crowdsourcing a
