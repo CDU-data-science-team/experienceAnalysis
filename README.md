@@ -12,13 +12,15 @@ the text. However, there are a few "spin-off" functions for assessing the
 performance of a classification model, e.g. calculating accuracy per class, making
 and plotting confusion matrices etc.
 
+The **function documentation** is [here](https://cdu-data-science-team.github.io/experienceAnalysis/).
+
 For an example of how the package is used in practice, see the 
 [source code](https://github.com/CDU-data-science-team/pxtextminingdashboard) 
 for [this  dashboard](https://involve.nottshc.nhs.uk:8443/text_mining_dashboard/).
 
 The package makes extensive use of [{tidytext}](https://www.tidytextmining.com/index.html) 
 (Silge & Robinson, 2017) but also employs `Python` libraries for sentiment 
-analysis (e.g. [TextBlob](https://textblob.readthedocs.io/en/dev/)) with the use 
+analysis (e.g. [TextBlob](https://textblob.readthedocs.io/en/dev/) and [vaderSentiment](https://github.com/cjhutto/vaderSentiment)) with the use 
 of [{reticulate}](https://rstudio.github.io/reticulate/).
 
 In line with the broader work of the CDU Data Science Team, all function names
