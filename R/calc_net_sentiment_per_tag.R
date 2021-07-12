@@ -58,11 +58,11 @@
 calc_net_sentiment_per_tag <- function(x, target_col_name = NULL,
                                        text_col_name) {
 
-  tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name,
+  tidy_text <- experienceAnalysis::prep_tidy_text(x, target_col_name,
                                                           text_col_name)
 
   # Find net sentiment in each tag
-  net_sentiment_afinn <- tidy_feedback %>%
+  net_sentiment_afinn <- tidy_text %>%
     dplyr::inner_join(tidytext::get_sentiments("afinn"), by = "word") %>%
     dplyr::group_by(
       dplyr::across(
@@ -74,12 +74,12 @@ calc_net_sentiment_per_tag <- function(x, target_col_name = NULL,
 
   net_sentiment_bing_and_nrc <- dplyr::bind_rows(
 
-    tidy_feedback %>%
+    tidy_text %>%
       dplyr::inner_join(tidytext::get_sentiments("bing"), by = "word") %>%
       dplyr::filter(sentiment %in% c("positive", "negative")) %>%
       dplyr::mutate(method = "Minging & Liu"),
 
-    tidy_feedback %>%
+    tidy_text %>%
       dplyr::inner_join(tidytext::get_sentiments("nrc"), by = "word") %>%
       dplyr::filter(sentiment %in% c("positive", "negative")) %>%
       dplyr::mutate(method = "NRC")

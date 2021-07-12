@@ -67,11 +67,11 @@
 calc_bing_word_counts <- function(x, target_col_name = NULL, text_col_name,
                                   filter_class = NULL) {
 
-  tidy_feedback <- experienceAnalysis::prep_tidy_feedback(x, target_col_name,
+  tidy_text <- experienceAnalysis::prep_tidy_text(x, target_col_name,
                                                           text_col_name)
 
   # Most common positive and negative words
-  bing_word_counts <- tidy_feedback %>%
+  bing_word_counts <- tidy_text %>%
     dplyr::filter(
       dplyr::across(
         dplyr::all_of(target_col_name),
