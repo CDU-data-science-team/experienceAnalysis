@@ -63,8 +63,8 @@
 #'   dplyr::select(-text)
 
 tidy_net_sentiment_nrc <- function(net_sentiment_wide_nrc,
-                                       sorting_sentiments = "anger",
-                                       num_of_lines = 60) {
+                                   sorting_sentiments = "anger",
+                                   num_of_docs = 60) {
 
   nrc_sentiments <- experienceAnalysis::prep_sentiments_nrc()
 
@@ -75,7 +75,7 @@ tidy_net_sentiment_nrc <- function(net_sentiment_wide_nrc,
     tidyr::pivot_longer(cols = dplyr::all_of(nrc_sentiments)) %>%
     dplyr::filter(value != 0) %>%
     dplyr::filter(linenumber %in%
-                    unique(.$linenumber)[1:num_of_lines]) %>%
+                    unique(.$linenumber)[1:num_of_docs]) %>%
     dplyr::mutate(
       name = factor(name, levels = sort(nrc_sentiments, decreasing = TRUE)),
       linenumber = factor(linenumber, levels = unique(.$linenumber))
