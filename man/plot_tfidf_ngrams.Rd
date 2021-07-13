@@ -2,16 +2,36 @@
 % Please edit documentation in R/plot_tfidf_ngrams.R
 \name{plot_tfidf_ngrams}
 \alias{plot_tfidf_ngrams}
-\title{Title}
+\title{Plot the \emph{n}-grams with the highest TF-IDFs}
 \usage{
-plot_tfidf_ngrams(tfidf_ngrams, ngrams_type, filter_class)
+plot_tfidf_ngrams(tfidf_ngrams, title = NULL)
 }
 \arguments{
-\item{tfidf_ngrams}{}
+\item{tfidf_ngrams}{A data frame from \code{\link{calc_tfidf_ngrams}}.}
 }
 \value{
-
+A \code{ggplot} (\code{ggplot::geom_col}).
 }
 \description{
-Title
+Plot the \emph{n}-grams with the highest TF-IDFs
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+calc_tfidf_ngrams(x, target_col_name = "book", text_col_name = "text",
+                  filter_class = "Emma",
+                  ngrams_type = "Bigrams",
+                  number_of_ngrams = 5
+) \%>\%
+  dplyr::filter(ngram != "4 4") \%>\% # First bigram is useless and distorts the plot
+  plot_tfidf_ngrams(title = "Bigrams with highest TF-IDFs in Emma")
 }

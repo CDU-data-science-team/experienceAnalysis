@@ -2,16 +2,17 @@
 % Please edit documentation in R/prep_all_pipeline_tuning_results.R
 \name{prep_all_pipeline_tuning_results}
 \alias{prep_all_pipeline_tuning_results}
-\title{Title}
+\title{Prepare table with all (hyper)parameter tunings}
 \usage{
 prep_all_pipeline_tuning_results(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{A "tuning_results" data frame.}
 }
 \value{
-
+A data frame.
 }
 \description{
-Title
+For internal use only! Tidy up a "tuning_results" table from
+\href{https://github.com/CDU-data-science-team/pxtextmining}{\code{pxtextmining}}.
 }

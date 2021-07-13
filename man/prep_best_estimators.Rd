@@ -2,16 +2,21 @@
 % Please edit documentation in R/prep_best_estimators.R
 \name{prep_best_estimators}
 \alias{prep_best_estimators}
-\title{Title}
+\title{Prepare table with the best (hyper)parameter tunings for each learner}
 \usage{
 prep_best_estimators(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{A "tuning_results" data frame. See
+\code{\link{prep_all_pipeline_tuning_results}}.}
 }
 \value{
-
+A data frame.
 }
 \description{
-Title
+For internal use only! Get the best-scoring (hyper)parameters for each
+learner based on Class Balance Accuracy.
+}
+\note{
+See \code{\link{prep_all_pipeline_tuning_results}}.
 }

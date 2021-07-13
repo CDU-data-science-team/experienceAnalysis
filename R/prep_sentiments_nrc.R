@@ -3,7 +3,7 @@
 #' @return Character vector of all NRC sentiments
 #' @export
 #'
-#' @examples
+#' @examples prep_sentiments_nrc()
 
 prep_sentiments_nrc <- function() {
 

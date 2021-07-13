@@ -2,16 +2,33 @@
 % Please edit documentation in R/plot_bigrams_network.R
 \name{plot_bigrams_network}
 \alias{plot_bigrams_network}
-\title{Title}
+\title{Plot a network of bigrams}
 \usage{
 plot_bigrams_network(bigrams_table)
 }
 \arguments{
-\item{tfidf_ngrams}{}
+\item{tfidf_ngrams}{A data frame from \code{\link{calc_bigrams_network}}.}
 }
 \value{
-
+A \code{ggraph} (\code{ggraph::ggraph}) network of bigrams.
 }
 \description{
-Title
+Plot a network of bigrams
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Bigrams for Emma
+calc_bigrams_network(x, target_col_name = "book", text_col_name = "text",
+                     filter_class = "Emma", bigrams_prop = 3) \%>\%
+    plot_bigrams_network()
 }

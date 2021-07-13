@@ -2,16 +2,52 @@
 % Please edit documentation in R/plot_net_sentiment_per_tag.R
 \name{plot_net_sentiment_per_tag}
 \alias{plot_net_sentiment_per_tag}
-\title{Title}
+\title{Plot "net sentiment" in a text}
 \usage{
-plot_net_sentiment_per_tag(net_sentiment_all_dicts, target_col_name)
+plot_net_sentiment_per_tag(
+  net_sentiment_all_dicts,
+  target_col_name,
+  title = NULL
+)
 }
 \arguments{
-\item{target_col_name}{}
+\item{net_sentiment_all_dicts}{A data frame from
+\code{\link{calc_net_sentiment_per_tag}}.}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{title}{Plot title. Defaults to \code{NULL}.}
 }
 \value{
-
+A \code{ggplot} (\code{ggplot::geom_col}).
 }
 \description{
-Title
+Plot the difference between "net positive" and "net negative" sentiment in
+a text for each sentiment dictionary and class (if any).
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+calc_net_sentiment_per_tag(x, target_col_name = "book",
+                           text_col_name = "text") \%>\%
+  plot_net_sentiment_per_tag(
+      target_col_name = "book",
+      title = "Net sentiment per book for each dictionary"
+  )
+
+calc_net_sentiment_per_tag(x, target_col_name = NULL,
+                           text_col_name = "text") \%>\%
+  plot_net_sentiment_per_tag(
+      target_col_name = NULL,
+      title = "Net sentiment in text for each dictionary"
+  )
 }

@@ -2,23 +2,64 @@
 % Please edit documentation in R/calc_sentiment_indicators.R
 \name{calc_sentiment_indicators}
 \alias{calc_sentiment_indicators}
-\title{Title}
+\title{Calculate text sentiment indicators using Python packages}
 \usage{
 calc_sentiment_indicators(
   x,
+  python_setup = TRUE,
   sys_setenv,
   which_python,
   which_venv,
   venv_name,
-  make_table = TRUE
+  text_col_name
 )
 }
 \arguments{
-\item{make_table}{}
+\item{x}{A data frame with a column that has the text. Any other columns will
+be ignored.}
+
+\item{python_setup}{A \code{logical} whether to set up the \code{Python} version,
+virtual environment etc. that can be controlled with arguments
+\code{sys_setenv}, \code{which_python}, \code{which_venv} and \code{venv_name}. These
+arguments will be ignored when \code{python_setup} is \code{FALSE}. The purpose of
+\code{python_setup} is that users may wish to control the \code{Python} parameters
+outside the actual function, for the session in general.}
+
+\item{sys_setenv}{A string with the path to the Python version to use in this
+session.}
+
+\item{which_python}{A string with the path to the Python version to use in
+this session.}
+
+\item{which_venv}{A string that should be "conda", "miniconda" or "python".
+See \verb{use_python\{reticulate\}}.}
+
+\item{venv_name}{A string with the name of the Python virtual environment to
+use in this session.}
+
+\item{text_col_name}{A string with the column name of the text variable.}
 }
 \value{
-
+A data frame with the five indicators described in Details.
 }
 \description{
-Title
+Uses Python's \code{TextBlob} and \code{vaderSentiment} packages to calculate several
+indicators of sentiment in a text.
+}
+\details{
+\code{TextBlob} calculates two indicators:
+\itemize{
+\item{\emph{Polarity}, which ranges from -1 (most negative)
+to 1 (most positive). Neutral text gets polarity of 0 or near it;}
+\item{\emph{Subjectivity}, which ranges from 0 (not subjective) to 1 (very
+subjective);}
+}
+\code{vaderSentiment} calculates four indicators:
+\itemize{
+\item{\emph{Compound} is like \code{TextBlob}'s \emph{polarity};}
+\item{Indicators of the proportion of positivity, negativity and
+neutrality in the text. The three indicators sum to 1;}
+}
+This function is an implementation of Python function \code{sentiment_scores}
+in package \href{https://github.com/CDU-data-science-team/pxtextmining/tree/main}{\code{pxtextmining}}.
 }

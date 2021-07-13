@@ -1,8 +1,11 @@
-#' Title
+#' Prepare table with all (hyper)parameter tunings
 #'
-#' @param x
+#' For internal use only! Tidy up a "tuning_results" table from
+#' [`pxtextmining`](https://github.com/CDU-data-science-team/pxtextmining).
 #'
-#' @return
+#' @param x A "tuning_results" data frame.
+#'
+#' @return A data frame.
 #' @export
 #'
 #' @examples
