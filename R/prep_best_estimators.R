@@ -1,10 +1,14 @@
 #' Prepare table with the best (hyper)parameter tunings for each learner
 #'
-#' Internal function
+#' For internal use only! Get the best-scoring (hyper)parameters for each
+#' learner based on Class Balance Accuracy.
 #'
-#' @param x
+#' @param x A "tuning_results" data frame. See
+#'     \code{\link{prep_all_pipeline_tuning_results}}.
 #'
-#' @return
+#'@note See \code{\link{prep_all_pipeline_tuning_results}}.
+#'
+#' @return A data frame.
 #' @export
 #'
 #' @examples

@@ -8,30 +8,23 @@ calc_bigrams_network(
   x,
   target_col_name,
   text_col_name,
-  grouping_variables = NULL,
   filter_class = NULL,
-  filter_main_group = NULL,
   bigrams_prop
 )
 }
 \arguments{
-\item{x}{A data frame with three columns: the column with the classes; the
-column with the text; and the column(s) with the group(s).}
+\item{x}{A data frame with one or more columns: the column with the classes
+(if \code{target_col_name} is not \code{NULL}); and the column with the text. Any
+other columns will be ignored.}
 
-\item{target_col_name}{A string with the column name of the target variable.}
+\item{target_col_name}{A string with the column name of the target variable.
+Defaults to \code{NULL}.}
 
 \item{text_col_name}{A string with the column name of the text variable.}
 
-\item{grouping_variables}{A string or vector of strings with the column
-name(s) (if any) of the grouping variable(s). Defaults to \code{NULL}.}
-
 \item{filter_class}{A string or vector of strings with the name(s) of the
 class(es) for which bigrams are to be created and counted. Defaults to
-\code{NULL} (all classes).}
-
-\item{filter_main_group}{A string with the name(s) of the organization(s)
-for which to create and count bigrams. Defaults to \code{NULL} (all
-organizations).}
+\code{NULL} (all rows).}
 
 \item{bigrams_prop}{A numeric in (0, 100] indicating the percentage of the
 most frequent bigrams to keep.}
@@ -41,12 +34,45 @@ A data frame with three columns: first word of bigram;
 second word of bigram; and bigram count.
 }
 \description{
-For a given labeled text, create and calculate the most frequently occurring
-bigrams for the class(es) and organization(s).
+For a given labelled text, create and calculate the most frequently occurring
+bigrams (no stop words) for the given class(es).
 }
 \note{
-When supplying more than one organization and/or class, the returned
-data frame will NOT separate the results for the different organizations
-and/or classes, i.e. the function sees multiple organizations and/or
-classes as one.
+When supplying more than one class in \code{filter_class}, the returned data
+frame will NOT separate the results for the different classes. If
+separation is desired, then run the function for each class separately or
+do something like this:\preformatted{# Assuming that the class and text columns are called "label" and
+# "feedback" respectively
+x \%>\%
+    split(.$label) \%>\%
+    purrr::map(
+        ~ calc_bigrams_network(., target_col_name = NULL,
+                               text_col_name = "feedback",
+                               filter_class = NULL, bigrams_prop = 50)
+    )
+}
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Bigrams for both books
+calc_bigrams_network(x, target_col_name = "book", text_col_name = "text",
+                     filter_class = NULL, bigrams_prop = 3)
+
+# Bigrams for Emma
+calc_bigrams_network(x, target_col_name = "book", text_col_name = "text",
+                     filter_class = "Emma", bigrams_prop = 3)
+
+# Bigrams for Pride & Prejudice
+calc_bigrams_network(x, target_col_name = "book", text_col_name = "text",
+                     filter_class = "Pride & Prejudice", bigrams_prop = 3)
 }

@@ -1,13 +1,27 @@
 Package: experienceAnalysis
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Helper Functions for Text Mining
+Version: 0.2.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Andreas D",
+           family = "Soteriades",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "andreas.soteriades@nottshc.nhs.uk",
+           comment = c(ORCID = "0000-0002-5992-9602"))
+Description: Package `{experienceAnalysis}` contains a suite of functions for performing 
+  _text mining_ such as sentiment analysis, analysis of word counts, TF-IDFs and 
+  _n_-grams etc. The package was  developed as a helper package for use with other 
+  packages/repos developed by
+  the [CDU Data Science Team](https://github.com/CDU-data-science-team), but the 
+  functions are generic and thus suitable for broader use. The largest focus is 
+  on calculating sentiment indicators and word counts/frequencies for labeled or unlabeled text,
+  and plotting the outcomes to easily detect potentially important information in
+  the text. However, there are a few "spin-off" functions for assessing the 
+  performance of a classification model, e.g. calculating accuracy per class, making
+  and plotting confusion matrices etc.\n
+  The package makes extensive use of [{tidytext}](https://www.tidytextmining.com/index.html) 
+  (Silge & Robinson, 2017) but also employs `Python` libraries for sentiment 
+  analysis (e.g. [TextBlob](https://textblob.readthedocs.io/en/dev/)) with the use 
+  of [{reticulate}](https://rstudio.github.io/reticulate/).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

@@ -2,22 +2,48 @@
 % Please edit documentation in R/plot_confusion_matrix.R
 \name{plot_confusion_matrix}
 \alias{plot_confusion_matrix}
-\title{Title}
+\title{Plot a confusion matrix}
 \usage{
 plot_confusion_matrix(
   x,
   target_col_name,
   target_pred_col_name,
-  grouping_variables = NULL,
   type = "heatmap"
 )
 }
 \arguments{
-\item{type}{}
+\item{x}{A data frame with two columns: the column with the actual classes;
+and the column with the predicted classes. Any other columns will be
+ignored.}
+
+\item{target_col_name}{A string with the column name of the target variable.}
+
+\item{target_pred_col_name}{A string with the column name of the predictions
+for the target variable.}
+
+\item{type}{A string indicating the of plot: "mosaic" or "heatmap".
+Defaults to- and currntly can only be- "heatmap".}
 }
 \value{
-
+A \code{ggplot} (\code{ggplot::geom_tile}).
 }
 \description{
-Title
+Plot a confusion matrix
+}
+\details{
+This function differs from \code{ggplot2::autoplot} because the gradient
+fills the heatmap (confusion matrix) based on absolute counts. It does
+not make sense to compare colours between different "Truth" columns. By
+contrast \code{plot_confusion_matrix} expresses column counts as proportions
+of the total count in that column. The proportions are used to define a
+colour scale. The \emph{actual} counts are plotted though.
+}
+\examples{
+library(experienceAnalysis)
+mtcars \%>\%
+  dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) \%>\%  # Mock predictions column
+  plot_confusion_matrix(
+    target_col_name = "carb",
+    target_pred_col_name = "carb_pred"
+  )
 }

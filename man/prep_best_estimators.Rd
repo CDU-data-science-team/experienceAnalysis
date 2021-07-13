@@ -7,11 +7,16 @@
 prep_best_estimators(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{A "tuning_results" data frame. See
+\code{\link{prep_all_pipeline_tuning_results}}.}
 }
 \value{
-
+A data frame.
 }
 \description{
-Internal function
+For internal use only! Get the best-scoring (hyper)parameters for each
+learner based on Class Balance Accuracy.
+}
+\note{
+See \code{\link{prep_all_pipeline_tuning_results}}.
 }

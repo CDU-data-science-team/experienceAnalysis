@@ -1,54 +1,52 @@
-#' Calculate the confusion matrix for each group
+#' Calculate the confusion matrix
 #'
-#' Calculates the confusion matrix of observed and predicted classes, overall
-#' or for each group (if any).
+#' Calculates the confusion matrix of observed and predicted classes, after
+#' converting them into factors first (not currently done by
+#' `conf_mat{yardstick}`).
 #'
-#' @param x A data frame with two or more columns, of which two should be
-#'     the following: the column with the actual classes; and the column with
-#'     the predicted classes. If there are grouping variables, the rest of the
-#'     columns should have the groups.
+#' @param x A data frame with two columns: the column with the actual classes;
+#'     and the column with the predicted classes. Any other columns will be
+#'     ignored.
 #' @param target_col_name A string with the column name of the target variable.
 #' @param target_pred_col_name A string with the column name of the predictions
 #'     for the target variable.
-#' @param grouping_variables A string or vector of strings with the column
-#'     name(s) (if any) of the grouping variable(s). Defaults to `NULL`.
 #' @param ... Further arguments passed from other methods.
 #'
-#' @return A list with as many elements as the number of groups (no groups
-#'     returns a list with one element). Each element contains an object with
-#'     class `conf_mat()` (see `conf_mat{yardstick}`).
+#' @return An object with class `conf_mat()` (see `conf_mat{yardstick}`).
 #' @export
 #'
 #' @examples
+#' library(experienceAnalysis)
+#' mtcars %>%
+#'   dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) %>%  # Mock predictions column
+#'   calc_accuracy_per_class(
+#'     target_col_name = "carb",
+#'     target_pred_col_name = "carb_pred"
+#'   )
+#'
+#' # Custom column names
+#' mtcars %>%
+#'   dplyr::mutate(carb_pred = sample(carb, size = nrow(.))) %>%  # Mock predictions column
+#'   calc_confusion_matrix(
+#'     target_col_name = "carb",
+#'     target_pred_col_name = "carb_pred"
+#'   )
 
 calc_confusion_matrix <- function(x, target_col_name, target_pred_col_name,
-                                  grouping_variables = NULL, ...) {
+                                  ...) {
 
+  # Convert cols to factors
   aux <- x %>%
-    dplyr::select(dplyr::all_of(c(grouping_variables, target_col_name,
-                                  target_pred_col_name))) %>%
+    dplyr::select(dplyr::all_of(c(target_col_name, target_pred_col_name))) %>%
     dplyr::mutate(
       dplyr::across(
-        -dplyr::all_of(grouping_variables),
+        dplyr::everything(),
         ~ as.factor(.)
       )
     )
 
-  if (!is.null(grouping_variables)) {
-
-    cm <- aux %>%
-      split(f = .[[grouping_variables]]) %>%
-      purrr::map(
-        ~ yardstick::conf_mat(., {{target_col_name}}, {{target_pred_col_name}},
-                              ...)
-      )
-  } else {
-
-    cm <- aux %>%
-      yardstick::conf_mat(., {{target_col_name}}, {{target_pred_col_name}},
-                          ...) %>%
-      list() # Convert to list to ensure returned object class is consistent.
-  }
+  cm <- aux %>%
+    yardstick::conf_mat(., {{target_col_name}}, {{target_pred_col_name}}, ...)
 
   return(cm)
 }

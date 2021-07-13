@@ -7,26 +7,74 @@
 tidy_net_sentiment_nrc(
   net_sentiment_wide_nrc,
   sorting_sentiments = "anger",
-  num_of_lines = 60
+  num_of_docs = 60
 )
 }
 \arguments{
 \item{net_sentiment_wide_nrc}{A data frame/tibble derived from
-calc_net_sentiment_per_tag{experienceAnalysis}.}
+\code{\link{calc_net_sentiment_nrc}}.}
 
 \item{sorting_sentiments}{A string of vector of strings with the NRC
-sentiments by which to sort the returned table. (To see all NRC
-sentiments run \code{prep_sentiments_nrc()}). Order matters:
-\code{c("anger", "fear")} will sort by "anger" first. Conversely,
+sentiments (Mohammad & Turney, 2013) by which to sort the returned table.
+(To see all NRC sentiments run \code{\link{prep_sentiments_nrc}}). Order
+matters: \code{c("anger", "fear")} will sort by "anger" first. Conversely,
 \code{c("fear", "anger")} will sort by "fear" first.}
 
-\item{num_of_lines}{The number of records to return, overall or for
-each group (if any).}
+\item{num_of_docs}{The number of document IDs for which to return results.
+See details.}
 }
 \value{
-
+A data frame in long format with four columns: the text; the line
+number; the NRC sentiment; and the count of the NRC sentiment.
 }
 \description{
-Order result of \verb{calc_net_sentiment_per_tag\{experienceAnalysis\}} by the
+Order result of \code{\link{calc_net_sentiment_nrc}} by the
 count of one or more NRC sentiments, and convert to "tidy" format.
+}
+\details{
+The returned data frame will have, for each document (or class- see
+\code{filter_class} in \code{\link{calc_net_sentiment_nrc}}), as many rows
+as the NRC sentiments with non-zero counts (remember- this function
+returns the result in \emph{long} format). If all sentiments have non-zero
+counts in a given document, then there will be 10 rows (as many as all
+the NRC sentiments) in the returned data frame for this document.
+Argument \code{num_of_docs} returns the first \code{num_of_docs} documents
+(or classes, see \code{filter_class} in \code{\link{calc_net_sentiment_nrc}}),
+with the top one being the one that has the highest count(s) of the NRC
+sentiment(s) specified in \code{sorting_sentiments}.
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(pp, emma),
+  book = c("Pride & Prejudice", "Emma")
+)
+
+# Net sentiment in each book
+net_sentiment_wide_nrc <- calc_net_sentiment_nrc(x, target_col_name = "book",
+                                                 text_col_name = "text",
+                                                 filter_class = NULL)
+
+net_sentiment_wide_nrc
+
+# Tidy net_sentiment_wide_nrc and place the most "angry" book at the top
+tidy_net_sentiment_nrc(net_sentiment_wide_nrc,
+                       sorting_sentiments = "anger",
+                       num_of_docs = 2) \%>\%
+  dplyr::select(-text)
+
+# Can sort by multiple sentiments too: as above, but for most "angry" and then for most "negative"
+tidy_net_sentiment_nrc(net_sentiment_wide_nrc,
+                       sorting_sentiments = c("anger", "negative"),
+                       num_of_docs = 2) \%>\%
+  dplyr::select(-text)
+}
+\references{
+Mohammad S.M. & Turney P.D. (2013). Crowdsourcing a Word–Emotion
+Association Lexicon. Computational Intelligence, 29(3):436-465.
 }

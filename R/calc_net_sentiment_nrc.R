@@ -3,39 +3,44 @@
 #' For a given text, translate all words into NRC sentiments and count sentiment
 #' occurrences.
 #'
-#' @param x A data frame with three columns: the column with the classes; the
-#'     column with the text; and the column(s) with the group(s).
+#' @param x A data frame with two columns: the column with the classes; and the
+#'     column with the text. Any other columns will be ignored.
 #' @param target_col_name A string with the column name of the target variable.
+#'     Defaults to `NULL`.
 #' @param text_col_name A string with the column name of the text variable.
-#' @param grouping_variables A string or vector of strings with the column
-#'     name(s) (if any) of the grouping variable(s). Defaults to `NULL`.
 #' @param filter_class A string or vector of strings with the name(s) of the
 #'     class(es) for which bigrams are to be created and counted. Defaults to
-#'     `NULL` (all classes).
-#' @param filter_main_group A string with the name(s) of the organization(s)
-#'     for which to create and count bigrams. Defaults to `NULL` (all
-#'     organizations).
+#'     `NULL` (all rows).
 #'
-#' @return
+#' @return A data frame with 12 or 13 columns: the text column; the line number;
+#'     the 10 NRC sentiments (anger, anticipation disgust, fear, joy, negative,
+#'     positive, sadness, surprise, trust- see Mohammad & Turney, 2013); and the
+#'     column with the classes (if any).
 #' @export
 #'
 #' @examples
+#' library(experienceAnalysis)
+#' books <- janeaustenr::austen_books() # Jane Austen books
+#' emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+#' pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+#'
+#' # Make data frame with books Emma and Pride & Prejudice
+#' x <- data.frame(
+#'   text = c(emma, pp),
+#'   book = c("Emma", "Pride & Prejudice")
+#' )
+#'
+#' # Net sentiment in each book
+#' calc_net_sentiment_nrc(x, target_col_name = "book", text_col_name = "text",
+#'                        filter_class = NULL)
+#' @references Mohammad S.M. & Turney P.D. (2013). Crowdsourcing a
+#'     Word–Emotion Association Lexicon. Computational Intelligence,
+#'     29(3):436-465.
 
-calc_net_sentiment_nrc <- function(x, target_col_name, text_col_name,
-                                   grouping_variables = NULL,
-                                   filter_class, filter_main_group = NULL) {
+calc_net_sentiment_nrc <- function(x, target_col_name = NULL, text_col_name,
+                                   filter_class = NULL) {
 
   nrc_sentiments <- experienceAnalysis::prep_sentiments_nrc()
-
-  aux <- experienceAnalysis::prep_colnames_and_filters(
-    x, grouping_variables,
-    target_col_name = NULL, filter_class,
-    filter_main_group,
-    column_names = NULL)
-
-  filter_class <- aux$filter_class
-  filter_main_group <- aux$filter_main_group
-  main_group_col_name <- aux$main_group_col_name
 
   text_data_filtered <- x %>%
     #dplyr::filter(super != "Couldn't be improved") %>%
@@ -43,12 +48,8 @@ calc_net_sentiment_nrc <- function(x, target_col_name, text_col_name,
     dplyr::filter(
       dplyr::across(
         dplyr::all_of(target_col_name),
-        # .data[[target_col_name]],
-        ~ . %in% filter_class
-      ),
-      dplyr::across(
-        dplyr::all_of(main_group_col_name),
-        ~ . %in% filter_main_group
+        ~ experienceAnalysis::tidy_filter_null(., filter_class,
+                                               filter_how = "in")
       )
     )
 
@@ -70,8 +71,11 @@ calc_net_sentiment_nrc <- function(x, target_col_name, text_col_name,
                        names_sort = TRUE
     ) %>%
     dplyr::left_join(text_data_filtered, by = "linenumber") %>%
-    dplyr::select(feedback, dplyr::everything(), -`NA`) %>%
-    dplyr::select(feedback, dplyr::everything())
+    dplyr::select(
+      dplyr::all_of(text_col_name),
+      dplyr::everything(),
+      -`NA`
+    )
 
     return(net_sentiment_nrc)
 }
