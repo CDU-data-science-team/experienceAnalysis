@@ -31,3 +31,5 @@ Imports:
     magrittr,
     Rdpack,
     reticulate
+Depends: 
+    R (>= 2.10)
