@@ -40,6 +40,9 @@
 calc_net_sentiment_nrc <- function(x, target_col_name = NULL, text_col_name,
                                    filter_class = NULL) {
 
+  # Check and load NRC sentiment dictionary (Mohammad & Turney, 2013)
+  nrc <- get_dictionary("nrc")
+
   nrc_sentiments <- experienceAnalysis::prep_sentiments_nrc()
 
   text_data_filtered <- x %>%
@@ -55,7 +58,7 @@ calc_net_sentiment_nrc <- function(x, target_col_name = NULL, text_col_name,
 
   net_sentiment_nrc <- text_data_filtered %>%
     tidytext::unnest_tokens(word, !! rlang::sym(text_col_name)) %>%
-    dplyr::left_join(tidytext::get_sentiments("nrc"), by = "word") %>% # We want a left join so as not to lose comments with no sentiment
+    dplyr::left_join(nrc, by = "word") %>% # We want a left join so as not to lose comments with no sentiment
     dplyr::count(linenumber, sentiment, name = "sentiment_count") %>%
     dplyr::mutate(
       sentiment_count =
