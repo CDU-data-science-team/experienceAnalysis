@@ -48,9 +48,21 @@ See [Naming guidelines for functions](#naming-guidelines-for-functions).
 -   `summary_*()`: Summarise results of calculations (there might be
     some overlap with `prep_*()`);
 
-## Visualisations
+### Visualisations
 
 -   `plot_*()`: Create a plot;
+
+## Deployment on a server
+
+Note that the sentiment dictionaries loaded from {tidytext} (via {textdata}) 
+do not all have an open licence and users must accept the licence agreement 
+the first time they run these functions. The console prompt to do this is 
+not accessible when deploying this software on a server. Consequently, in 
+order to deploy this application it is necessary to run the contents of the 
+data-raw/ folder. You will need to accept the terms of the licences yourself.
+When this is done, the data will be accessible to the package in data/ and 
+all of the sentiment dictionary functions will automatically load from this 
+location instead of using the {tidytext} functions.
 
 ## References
 Silge J. & Robinson D. (2017). Text Mining with R: A Tidy Approach. Sebastopol, CA: 
