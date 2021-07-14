@@ -7,7 +7,9 @@
 
 prep_sentiments_nrc <- function() {
 
-  nrc_sentiments <- tidytext::get_sentiments("nrc") %>%
+  nrc <- get_dictionary("nrc")
+
+  nrc_sentiments <- nrc %>%
     dplyr::select(sentiment) %>%
     dplyr::distinct() %>%
     dplyr::pull() %>%

@@ -67,6 +67,10 @@
 calc_bing_word_counts <- function(x, target_col_name = NULL, text_col_name,
                                   filter_class = NULL) {
 
+  # check and prep bing dictionary
+
+  bing <- get_dictionary("bing")
+
   tidy_text <- experienceAnalysis::prep_tidy_text(x, target_col_name,
                                                           text_col_name)
 
@@ -79,7 +83,7 @@ calc_bing_word_counts <- function(x, target_col_name = NULL, text_col_name,
                                                filter_how = "in")
       )
     ) %>%
-    dplyr::inner_join(tidytext::get_sentiments("bing"), by = "word") %>%
+    dplyr::inner_join(bing, by = "word") %>%
     dplyr::count(word, sentiment, sort = TRUE)
 
   return(bing_word_counts)
