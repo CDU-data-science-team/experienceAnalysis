@@ -67,12 +67,11 @@
 calc_bing_word_counts <- function(x, target_col_name = NULL, text_col_name,
                                   filter_class = NULL) {
 
-  # check and prep bing dictionary
-
+  # Check and load Bing et al. dictionary (Hu & Liu, 2004)
   bing <- get_dictionary("bing")
 
   tidy_text <- experienceAnalysis::prep_tidy_text(x, target_col_name,
-                                                          text_col_name)
+                                                  text_col_name)
 
   # Most common positive and negative words
   bing_word_counts <- tidy_text %>%

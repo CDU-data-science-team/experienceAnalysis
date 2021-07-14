@@ -58,8 +58,7 @@
 calc_net_sentiment_per_tag <- function(x, target_col_name = NULL,
                                        text_col_name) {
 
-  # fetch all sentiment dictinaries
-
+  # Fetch all sentiment dictionaries
   nrc <- get_dictionary("nrc")
   afinn <- get_dictionary("afinn")
   bing <- get_dictionary("bing")

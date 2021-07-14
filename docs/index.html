@@ -108,14 +108,19 @@
 <code>summary_*()</code>: Summarise results of calculations (there might be some overlap with <code>prep_*()</code>);</li>
 </ul>
 </div>
-</div>
-<div id="visualisations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualisations" class="anchor"></a>Visualisations</h2>
+<div id="visualisations" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualisations" class="anchor"></a>Visualisations</h3>
 <ul>
 <li>
 <code>plot_*()</code>: Create a plot;</li>
 </ul>
+</div>
+</div>
+<div id="deployment-on-a-server" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deployment-on-a-server" class="anchor"></a>Deployment on a server</h2>
+<p>Note that the sentiment dictionaries loaded from <a href="https://github.com/juliasilge/tidytext">tidytext</a> (via <a href="https://CRAN.R-project.org/package=textdata"><code>{textdata}</code></a>) do not all have an open licence and users must accept the licence agreement the first time they run these functions. The console prompt to do this is not accessible when deploying this software on a server. Consequently, in order to deploy this application it is necessary to run the contents of the <code>data-raw/</code> folder. You will need to accept the terms of the licences yourself. When this is done, the data will be accessible to the package in <code>data/</code> and all of the sentiment dictionary functions will automatically load from this location instead of using the <a href="https://github.com/juliasilge/tidytext">tidytext</a> functions.</p>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">

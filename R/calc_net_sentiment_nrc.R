@@ -40,8 +40,7 @@
 calc_net_sentiment_nrc <- function(x, target_col_name = NULL, text_col_name,
                                    filter_class = NULL) {
 
-  # check and load nrc sentiment dictionary
-
+  # Check and load NRC sentiment dictionary (Mohammad & Turney, 2013)
   nrc <- get_dictionary("nrc")
 
   nrc_sentiments <- experienceAnalysis::prep_sentiments_nrc()
