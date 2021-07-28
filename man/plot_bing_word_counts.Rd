@@ -2,16 +2,33 @@
 % Please edit documentation in R/plot_bing_word_counts.R
 \name{plot_bing_word_counts}
 \alias{plot_bing_word_counts}
-\title{Title}
+\title{Plot bar plots of the most frequent words.}
 \usage{
 plot_bing_word_counts(bing_word_counts)
 }
 \arguments{
-\item{bing_word_counts}{}
+\item{bing_word_counts}{A data frame from \code{\link{calc_bing_word_counts}}.}
 }
 \value{
-
+A \code{ggplot} (\code{ggplot::geom_col}).
 }
 \description{
-Title
+Plot bar plots of the most frequent words.
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Word counts for both books
+calc_bing_word_counts(x, target_col_name = "book", text_col_name = "text",
+                      filter_class = NULL) \%>\%
+    plot_bing_word_counts()
 }

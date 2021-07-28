@@ -1,8 +1,10 @@
-#' Title
+#' Plot the best `Scikit-learn` (Python) estimators
 #'
-#' @param best_estimators
+#' For internal use only!
 #'
-#' @return
+#' @param best_estimators The result of \code{\link{prep_best_estimators}}.
+#'
+#' @return A `ggplot2::geom_col`.
 #' @export
 #'
 #' @examples

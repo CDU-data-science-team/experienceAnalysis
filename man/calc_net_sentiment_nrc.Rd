@@ -2,22 +2,56 @@
 % Please edit documentation in R/calc_net_sentiment_nrc.R
 \name{calc_net_sentiment_nrc}
 \alias{calc_net_sentiment_nrc}
-\title{Title}
+\title{Calculate "net sentiment" in a text}
 \usage{
 calc_net_sentiment_nrc(
   x,
-  class_col_name,
-  org_col_name,
-  filter_class,
-  filter_organization
+  target_col_name = NULL,
+  text_col_name,
+  filter_class = NULL
 )
 }
 \arguments{
-\item{filter_organization}{}
+\item{x}{A data frame with two columns: the column with the classes; and the
+column with the text. Any other columns will be ignored.}
+
+\item{target_col_name}{A string with the column name of the target variable.
+Defaults to \code{NULL}.}
+
+\item{text_col_name}{A string with the column name of the text variable.}
+
+\item{filter_class}{A string or vector of strings with the name(s) of the
+class(es) for which bigrams are to be created and counted. Defaults to
+\code{NULL} (all rows).}
 }
 \value{
-
+A data frame with 12 or 13 columns: the text column; the line number;
+the 10 NRC sentiments (anger, anticipation disgust, fear, joy, negative,
+positive, sadness, surprise, trust- see Mohammad & Turney, 2013); and the
+column with the classes (if any).
 }
 \description{
-Title
+For a given text, translate all words into NRC sentiments and count sentiment
+occurrences.
+}
+\examples{
+library(experienceAnalysis)
+books <- janeaustenr::austen_books() # Jane Austen books
+emma <- paste(books[books$book == "Emma", ], collapse = " ") # String with whole book
+pp <- paste(books[books$book == "Pride & Prejudice", ], collapse = " ") # String with whole book
+
+# Make data frame with books Emma and Pride & Prejudice
+x <- data.frame(
+  text = c(emma, pp),
+  book = c("Emma", "Pride & Prejudice")
+)
+
+# Net sentiment in each book
+calc_net_sentiment_nrc(x, target_col_name = "book", text_col_name = "text",
+                       filter_class = NULL)
+}
+\references{
+Mohammad S.M. & Turney P.D. (2013). Crowdsourcing a
+Word–Emotion Association Lexicon. Computational Intelligence,
+29(3):436-465.
 }
