@@ -1,6 +1,6 @@
 Package: experienceAnalysis
 Title: Helper Functions for Text Mining
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person(given = "Andreas D",
            family = "Soteriades",
@@ -31,3 +31,8 @@ Imports:
     magrittr,
     Rdpack,
     reticulate
+Depends: 
+    R (>= 2.10)
+Suggests: 
+    testthat (>= 3.0.0)
+    Config/testthat/edition: 3
