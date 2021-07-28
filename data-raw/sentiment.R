@@ -2,9 +2,9 @@
 
 library(textdata)
 
-afinn <- lexicon_afinn("afinn")
-bing <- lexicon_afinn("bing")
-nrc <- lexicon_afinn("nrc")
+afinn <- lexicon_afinn()
+bing <- lexicon_bing()
+nrc <- lexicon_nrc()
 
 usethis::use_data(afinn, overwrite = TRUE)
 usethis::use_data(bing, overwrite = TRUE)
