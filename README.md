@@ -5,12 +5,11 @@ _text mining_ such as sentiment analysis, analysis of word counts, TF-IDFs and
 _n_-grams etc. The package was  developed as a helper package for use with other 
 packages/repos developed by
 the [CDU Data Science Team](https://github.com/CDU-data-science-team), but the 
-functions are generic and thus suitable for broader use. The largest focus is 
-on calculating sentiment indicators and word counts/frequencies for labeled or unlabeled text,
-and plotting the outcomes to easily detect potentially important information in
-the text. However, there are a few "spin-off" functions for assessing the 
-performance of a classification model, e.g. calculating accuracy per class, making
-and plotting confusion matrices etc.
+functions are generic and thus suitable for broader use. The focus is 
+on calculating sentiment indicators and word counts/frequencies for labeled or 
+unlabeled text, and plotting the outcomes to easily detect potentially important information in the text. However, there are a few "spin-off" functions for 
+assessing the performance of a classification model, e.g. calculating accuracy 
+per class, making and plotting confusion matrices etc.
 
 The **function documentation** is [here](https://cdu-data-science-team.github.io/experienceAnalysis/).
 
@@ -19,9 +18,7 @@ For an example of how the package is used in practice, see the
 for [this  dashboard](https://involve.nottshc.nhs.uk:8443/text_mining_dashboard/).
 
 The package makes extensive use of [{tidytext}](https://www.tidytextmining.com/index.html) 
-(Silge & Robinson, 2017) but also employs `Python` libraries for sentiment 
-analysis (e.g. [TextBlob](https://textblob.readthedocs.io/en/dev/) and [vaderSentiment](https://github.com/cjhutto/vaderSentiment)) with the use 
-of [{reticulate}](https://rstudio.github.io/reticulate/).
+(Silge & Robinson, 2017).
 
 In line with the broader work of the CDU Data Science Team, all function names
 have prefixes that give users a hint of what type of operations they perform 
@@ -66,5 +63,5 @@ functions will automatically load from this location instead of using the
 `{tidytext}` functions.
 
 ## References
-Silge J. & Robinson D. (2017). Text Mining with R: A Tidy Approach. Sebastopol, CA: 
-O’Reilly Media. ISBN 978-1-491-98165-8.
+Silge J. & Robinson D. (2017). Text Mining with R: A Tidy Approach. Sebastopol, 
+CA: O’Reilly Media. ISBN 978-1-491-98165-8.
